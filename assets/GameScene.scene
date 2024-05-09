@@ -270,7 +270,7 @@
         "__id__": 13
       },
       {
-        "__id__": 16
+        "__id__": 17
       }
     ],
     "_active": true,
@@ -598,7 +598,39 @@
     "thisBoard": {
       "__id__": 10
     },
+    "thisGrid": {
+      "__id__": 16
+    },
     "_id": "7fXVkjSAdE6LUcAnbipPBz"
+  },
+  {
+    "__type__": "58e41OgaotFkbqYQXFfXryW",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 17
+    },
+    "_enabled": true,
+    "__prefab": null,
+    "cellPrefabs": [
+      {
+        "__uuid__": "666f6b6b-4232-4df1-a3c1-9e7ff01da4d9",
+        "__expectedType__": "cc.Prefab"
+      },
+      {
+        "__uuid__": "a70f69e1-235d-45b5-bf2b-b3731e83b434",
+        "__expectedType__": "cc.Prefab"
+      },
+      {
+        "__uuid__": "634688b1-6a57-494b-9a21-49a3a2a72f3c",
+        "__expectedType__": "cc.Prefab"
+      }
+    ],
+    "board": {
+      "__id__": 10
+    },
+    "_id": "88JlN7n8ZJrLYKlvo67nV0"
   },
   {
     "__type__": "cc.Node",
@@ -612,10 +644,10 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 17
+        "__id__": 18
       },
       {
-        "__id__": 18
+        "__id__": 16
       }
     ],
     "_prefab": null,
@@ -654,7 +686,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 16
+      "__id__": 17
     },
     "_enabled": true,
     "__prefab": null,
@@ -669,36 +701,6 @@
       "y": 0.5
     },
     "_id": "13uCizT3tPMbWxU8NNZZ/W"
-  },
-  {
-    "__type__": "58e41OgaotFkbqYQXFfXryW",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 16
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "cellPrefabs": [
-      {
-        "__uuid__": "666f6b6b-4232-4df1-a3c1-9e7ff01da4d9",
-        "__expectedType__": "cc.Prefab"
-      },
-      {
-        "__uuid__": "a70f69e1-235d-45b5-bf2b-b3731e83b434",
-        "__expectedType__": "cc.Prefab"
-      },
-      {
-        "__uuid__": "634688b1-6a57-494b-9a21-49a3a2a72f3c",
-        "__expectedType__": "cc.Prefab"
-      }
-    ],
-    "board": {
-      "__id__": 10
-    },
-    "gridSize": 8,
-    "_id": "88JlN7n8ZJrLYKlvo67nV0"
   },
   {
     "__type__": "cc.UITransform",

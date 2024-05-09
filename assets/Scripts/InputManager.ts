@@ -1,4 +1,5 @@
 import { _decorator, Component, Node, Vec3, EventTouch, UITransform, Vec2 } from 'cc';
+import { GridGenerator } from './GridGenerator';
 const { ccclass, property } = _decorator;
 
 @ccclass('InputManager')
@@ -7,6 +8,8 @@ export class InputManager extends Component {
     mousePos:Vec3;
     @property(Node)
     thisBoard:Node = null;
+    @property(GridGenerator)
+    thisGrid:GridGenerator;
     private static instance: InputManager = null;
     public static getInstance(): InputManager {
         if (!InputManager.instance) {
