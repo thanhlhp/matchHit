@@ -14,7 +14,7 @@ export class GridGenerator extends Component {
     cellSize: number = 100; // Size of each cell in pixels
   
     start() {   
-        this.ResetListCellTraced();
+        //this.ResetListCellTraced();
         for (let i = 0; i < this.gridSize; i++) {
             this.cells[i] = [];
             for (let j = 0; j < this.gridSize; j++)
@@ -48,20 +48,42 @@ export class GridGenerator extends Component {
     {
         this.listCellTraced = [];
         for (let i = 0; i < this.gridSize; i++) {
-            this.cells[i] = [];
-            for (let j = 0; j < this.gridSize; j++)
-            {
-                this.cells[i][j].getComponent(ElementScript).isTracing = false;
-                this.cells[i][j].getComponent(ElementScript).isSelect = false;
-            }
+          this.cells[i].forEach(cell=>{
+            cell.getComponent(ElementScript).isSelect = false;
+            cell.getComponent(ElementScript).isTracing = false;
+            
+          })
         }
     }
-    CheckCanTracing()
+    CheckCanTracing(cell:Node)
     {
         if(this.listCellTraced.length == 0)
         {
-            return true
+            this.listCellTraced.push(cell);
+            console.log(this.listCellTraced.length)
+            return true;
+        }else
+        {
+            //Xu ly xung quanh cell
+            console.log("aaaa");
+            let a = cell.getComponent(ElementScript).x;
+            let b = cell.getComponent(ElementScript).y;
+            let beforeCell = this.listCellTraced[this.listCellTraced.length-1];
+            
+            // if(this.listCellTraced[a-1][b] == beforeCell&&a>0|| this.listCellTraced[a+1][b] == beforeCell
+            //     ||(this.listCellTraced[a][b-1] == beforeCell&&b>0)||this.listCellTraced[a][b+1] == beforeCell
+            //     ||(this.listCellTraced[a-1][b-1] == beforeCell&&a>0&&b>0)||this.listCellTraced[a+1][b+1] == beforeCell
+            //     ||(this.listCellTraced[a-1][b+1] == beforeCell&&a>0)||(this.listCellTraced[a+1][b-1] == beforeCell&&b>0))
+                {
+                    if(beforeCell.getComponent(ElementScript).color == cell.getComponent(ElementScript).color)
+                    {
+                        this.listCellTraced.push(cell);
+                        cell.getComponent(ElementScript).stt = this.listCellTraced.length-1;
+                        return  true;
+                    }
+                }
         } 
+        return false;
         
     }
     getRandomNumber(min: number, max: number): number {
