@@ -1,4 +1,5 @@
-import { _decorator, Component, Node, Prefab, instantiate, Vec3, random } from 'cc';
+import { _decorator, Component, Node, Prefab, instantiate, Vec3, random, Tween, tween, easing } from 'cc';
+import { setUncaughtExceptionCaptureCallback } from 'process';
 import { ElementScript } from './ElementScript';
 const { ccclass, property } = _decorator;
 
@@ -10,14 +11,15 @@ export class GridGenerator extends Component {
     board : Node;
     cells:Node[][] = [];
     listCellTraced:Node[] = [];
+    idItemCurent:number = 0;
     gridSize: number = 8; // Grid dimensions
     cellSize: number = 100; // Size of each cell in pixels
   
     start() {   
-        //this.ResetListCellTraced();
-        for (let i = 0; i < this.gridSize; i++) {
+        
+        for (let i = -1; i < this.gridSize+1; i++) {
             this.cells[i] = [];
-            for (let j = 0; j < this.gridSize; j++)
+            for (let j = -1; j < this.gridSize+1; j++)
             {
                 this.cells[i][j] = null;
             }
@@ -48,11 +50,15 @@ export class GridGenerator extends Component {
     {
         this.listCellTraced = [];
         for (let i = 0; i < this.gridSize; i++) {
-          this.cells[i].forEach(cell=>{
-            cell.getComponent(ElementScript).isSelect = false;
-            cell.getComponent(ElementScript).isTracing = false;
+            for (let j = 0; j < this.gridSize; j++) {
+                this.cells[i][j].getComponent(ElementScript).isSelect = false;
+                this.cells[i][j].getComponent(ElementScript).isTracing = false;
+            }
+      
             
-          })
+               
+            
+          
         }
     }
     CheckCanTracing(cell:Node)
@@ -60,7 +66,10 @@ export class GridGenerator extends Component {
         if(this.listCellTraced.length == 0)
         {
             this.listCellTraced.push(cell);
-            console.log(this.listCellTraced.length)
+           
+            this.idItemCurent = cell.getComponent(ElementScript).color;
+            console.log(this.idItemCurent);
+            this.ScaleItem(true);
             return true;
         }else
         {
@@ -70,10 +79,10 @@ export class GridGenerator extends Component {
             let b = cell.getComponent(ElementScript).y;
             let beforeCell = this.listCellTraced[this.listCellTraced.length-1];
             
-            // if(this.listCellTraced[a-1][b] == beforeCell&&a>0|| this.listCellTraced[a+1][b] == beforeCell
-            //     ||(this.listCellTraced[a][b-1] == beforeCell&&b>0)||this.listCellTraced[a][b+1] == beforeCell
-            //     ||(this.listCellTraced[a-1][b-1] == beforeCell&&a>0&&b>0)||this.listCellTraced[a+1][b+1] == beforeCell
-            //     ||(this.listCellTraced[a-1][b+1] == beforeCell&&a>0)||(this.listCellTraced[a+1][b-1] == beforeCell&&b>0))
+            if(this.cells[a-1][b] == beforeCell|| this.cells[a+1][b] == beforeCell
+                ||(this.cells[a][b-1] == beforeCell)||this.cells[a][b+1] == beforeCell
+                ||(this.cells[a-1][b-1] == beforeCell)||this.cells[a+1][b+1] == beforeCell
+                ||(this.cells[a-1][b+1] == beforeCell)||(this.cells[a+1][b-1] == beforeCell))
                 {
                     if(beforeCell.getComponent(ElementScript).color == cell.getComponent(ElementScript).color)
                     {
@@ -84,6 +93,46 @@ export class GridGenerator extends Component {
                 }
         } 
         return false;
+        
+    }
+    ScaleItem(scale: boolean)
+    {
+       
+        if(scale)
+        {
+            for (let i = 0; i < this.gridSize; i++) {
+                for (let j = 0; j < this.gridSize; j++)
+                {       
+                    if(this.cells[i][j].getComponent(ElementScript).item!=null)
+                     if(this.cells[i][j].getComponent(ElementScript).color == this.idItemCurent)
+                        {
+                     
+                            tween(this.cells[i][j].getComponent(ElementScript).item)
+                            .to(0.2,{scale: new Vec3(1.2,1.2,1.2)})
+                            .start()
+                        }
+                    
+                  
+                }
+            }
+        } else 
+        {
+            for (let i = 0; i < this.gridSize; i++) {
+                for (let j = 0; j < this.gridSize; j++)
+                {
+                    if(this.cells[i][j].getComponent(ElementScript).item!=null)
+                        if(this.cells[i][j].getComponent(ElementScript).color == this.idItemCurent)
+                        {
+                             
+                                tween(this.cells[i][j].getComponent(ElementScript).item)
+                                .to(0.2,{scale: new Vec3(1,1,1)})
+                                .start()
+                        }
+                    
+                   
+                }
+            }
+        }
         
     }
     getRandomNumber(min: number, max: number): number {
