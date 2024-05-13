@@ -2,12 +2,12 @@
   "ver": "1.1.50",
   "importer": "prefab",
   "imported": true,
-  "uuid": "666f6b6b-4232-4df1-a3c1-9e7ff01da4d9",
+  "uuid": "705e3be3-1409-46ec-b0e3-34a6f379beeb",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "element_do"
+    "syncNodeName": "box"
   }
 }

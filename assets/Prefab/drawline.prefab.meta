@@ -2,12 +2,12 @@
   "ver": "1.1.50",
   "importer": "prefab",
   "imported": true,
-  "uuid": "634688b1-6a57-494b-9a21-49a3a2a72f3c",
+  "uuid": "7b12f40a-0988-4258-aecb-3b2eb977cafe",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "element-xanhduong"
+    "syncNodeName": "drawline"
   }
 }

@@ -1,6 +1,8 @@
 import { _decorator, Component, Node, Vec3, EventTouch, UITransform, Vec2, tween, Tween } from 'cc';
+import { DrawLine } from './DrawLine';
 import { ElementScript } from './ElementScript';
 import { GridGenerator } from './GridGenerator';
+import { ItemScript } from './ItemScript';
 const { ccclass, property } = _decorator;
 
 @ccclass('InputManager')
@@ -18,6 +20,7 @@ export class InputManager extends Component {
         }
         return InputManager.instance;
     }
+ 
     onLoad()
     {
         if (InputManager.instance === null) {
@@ -25,6 +28,10 @@ export class InputManager extends Component {
         } else {
             this.destroy(); // Destroy any additional instances created
         }
+   
+        
+    }
+    start(): void {
         this.node.on(Node.EventType.TOUCH_START,(event:EventTouch)=>
         {
             this.OnTouchStart(event);
@@ -38,19 +45,22 @@ export class InputManager extends Component {
         {
             this.OnTouchEnd(event);
         },this)
-        
     }
-    
     OnTouchStart(event: EventTouch)
     {
-        //this.thisGrid.ResetListCellTraced();  
-        this.isTouch = true;
+        this.thisGrid.ResetListCellTraced();    
         this.mousePos = this.thisBoard.getComponent(UITransform).convertToNodeSpaceAR(new Vec3(event.getUILocation().x,event.getUILocation().y,0));
         for (let i = 0;i<this.thisGrid.gridSize;i++)
-        {
-                this.thisGrid.cells[i].forEach(cell=>{
-                    if(cell!=null)
-                    cell.getComponent(ElementScript).CheckTouch(this.mousePos);
+        {   
+                this.thisGrid.cells[i].forEach(cell=>{    
+                if(cell!=null && cell.getComponent(ElementScript).item!=null &&cell.getComponent(ElementScript).item.getComponent(ItemScript).type!=0  && cell.getComponent(UITransform).getBoundingBox().contains(new Vec2(this.mousePos.x,this.mousePos.y)))
+                {
+                    this.isTouch = true;
+                    cell.getComponent(ElementScript).isSelect = true;
+                    cell.getComponent(ElementScript).CheckTouch();
+                    
+                }
+                
                 })
         }
        
@@ -62,52 +72,55 @@ export class InputManager extends Component {
         for (let i = 0;i<this.thisGrid.gridSize;i++)
         {
                 this.thisGrid.cells[i].forEach(cell=>{
-                    if(cell!=null)
-                    cell.getComponent(ElementScript).CheckTouch(this.mousePos);
+                    if(cell!=null && cell.getComponent(UITransform).getBoundingBox().contains(new Vec2(this.mousePos.x,this.mousePos.y)))
+                    {
+                        cell.getComponent(ElementScript).isSelect = true;
+                        cell.getComponent(ElementScript).CheckTouch();
+                        
+                    }
                 })
         }
         // 
 
     }
     OnTouchEnd(event:EventTouch)
-    {
-        this.isTouch = false;
-
-        if(this.thisGrid.getComponent(GridGenerator).listCellTraced.length>=2)
-        {
-            console.log("an duoc combo"+this.thisGrid.getComponent(GridGenerator).listCellTraced.length+"type:"+this.thisGrid.getComponent(GridGenerator).listCellTraced[1].getComponent(ElementScript).color);
-            this.ClaimCell();
+    {       
+            if(this.isTouch)
+            {
+                if(this.thisGrid.getComponent(GridGenerator).listCellTraced.length>=2 )
+                {
+                    console.log("an duoc combo"+this.thisGrid.getComponent(GridGenerator).listCellTraced.length+"type:"+this.thisGrid.getComponent(GridGenerator).listCellTraced[1].getComponent(ElementScript).color);
+                    this.ClaimCell();
+                    for(let i = 0;i<this.thisGrid.listLineRender.length;i++)
+                    {
+                        this.thisGrid.listLineRender[i].destroy();
+                    }
+                    
+                } else 
+                {
+                    this.thisGrid.ScaleItem(false);
+                }
+                this.isTouch = false;
+            }
             
-        } else 
-        {
-            this.thisGrid.ScaleItem(false);
-        }
-     
-        this.thisGrid.ResetListCellTraced();
+         
+            this.thisGrid.ResetListCellTraced();
+        
     }
     ClaimCell()
     {
         this.thisGrid.getComponent(GridGenerator).listCellTraced.forEach(obj=>{
-            let item:Node = obj.getComponent(ElementScript).item;
-            tween(item)
-            .to(0.25,{scale: new Vec3(0,0,0)})
-            .call(()=>{
-                item.destroy();
-                item = null;
-                
-            })
-            .call(()=>{
-                this.thisGrid.ScaleItem(false);
-                obj.getComponent(ElementScript).color = 0;
-            })
-            .start()
+            if(obj!=null)
+            {
+                let item:Node = obj.getComponent(ElementScript).item;
+                item.getComponent(ItemScript).Claim();
+            }
+        
             
          })
     }
     
-    start(): void {
-
-    }
+ 
 
     update(deltaTime: number) {
       

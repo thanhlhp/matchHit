@@ -7,5 +7,15 @@
       "fitHeight": true,
       "fitWidth": true
     }
-  }
+  },
+  "layer": [
+    {
+      "name": "item",
+      "value": 1
+    },
+    {
+      "name": "line",
+      "value": 2
+    }
+  ]
 }
