@@ -19,9 +19,11 @@ export class GridGenerator extends Component {
     listCellTraced:Node[] = [];
     listLineRender:Node[] = [];
     idItemCurent:number = 0;
-    gridSize: number = 8; // Grid dimensions
-    cellSize: number = 100; // Size of each cell in pixels
-    
+    gridSize: number = 6; // Grid dimensions
+    cellSize: number = 120; // Size of each cell in pixels
+    indexItem :number = 100;
+    indexCell: number = 0;
+    indeLine:number;
     start() {   
         
         for (let i = -1; i < this.gridSize+1; i++) {
@@ -37,15 +39,24 @@ export class GridGenerator extends Component {
                 let index =Math.round(this.getRandomNumber(0,this.cellPrefabs.length-1));   
                 const cell = instantiate(this.box); // Create a new cell from the prefab
                 cell.setParent(this.board);
-                const element = instantiate(this.cellPrefabs[index])
-                element.setParent(cell)
-                cell.getComponent(ElementScript).item = element; // Set the parent of the cell to this node
+
+                //const element = instantiate(this.cellPrefabs[index])
+                //element.setParent(this.board)
+                 // Set the parent of the cell to this node
                 // cell.getComponent(ElementScript).posX = i;
                 // cell.getComponent(ElementScript).posY = j;    
                 // Calculate position based on grid coordinates
                 const posx = j * this.cellSize - (this.gridSize / 2) * this.cellSize + this.cellSize / 2;
                 const posy = i * this.cellSize - (this.gridSize / 2) * this.cellSize + this.cellSize / 2;
                 cell.setPosition(new Vec3(posx, posy, 0));
+                cell.setSiblingIndex(this.indexCell);
+                this.indexCell++;
+                const element = instantiate(this.cellPrefabs[index])
+                element.setParent(this.board)
+                element.setPosition(cell.position);
+                element.setSiblingIndex(this.indexItem)
+                this.indexItem++;
+                cell.getComponent(ElementScript).item = element;
                 if(this.cells[i][j] == null)
                 {
                     this.cells[i][j] = cell;
@@ -70,6 +81,7 @@ export class GridGenerator extends Component {
     }
     CheckCanTracing(cell:Node)
     {
+        this.indeLine = this.indexCell;
         console.log("tracking");
         if(cell.getComponent(ElementScript).item.getComponent(ItemScript).type>0)// dieu kien type cua cell co the an
         {
@@ -101,7 +113,11 @@ export class GridGenerator extends Component {
                             this.listCellTraced.push(cell);
                             const line = instantiate(this.line);
                             line.setParent(this.board);
+                            
                             line.getComponent(DrawLine).drawLine(beforeCell.position,cell.position);
+                            // console.log(this.minIndexLayer);
+                            line.setSiblingIndex(this.indeLine);
+                            this.indeLine++;
                             this.listLineRender.push(line)
                             
                             console.log(this.listLineRender);

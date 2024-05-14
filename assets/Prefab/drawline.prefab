@@ -103,7 +103,7 @@
       "__id__": 5
     },
     "_customMaterial": {
-      "__uuid__": "78e0584a-4343-4727-8f37-e14e65c2a2db",
+      "__uuid__": "5f70f005-a6c9-4af9-aa48-73f26af9e6eb",
       "__expectedType__": "cc.Material"
     },
     "_srcBlendFactor": 2,
@@ -115,7 +115,7 @@
       "b": 255,
       "a": 255
     },
-    "_lineWidth": 5,
+    "_lineWidth": 1,
     "_strokeColor": {
       "__type__": "cc.Color",
       "r": 0,
@@ -130,7 +130,7 @@
       "r": 255,
       "g": 255,
       "b": 255,
-      "a": 255
+      "a": 0
     },
     "_miterLimit": 10,
     "_id": ""
@@ -169,7 +169,6 @@
       "__id__": 0
     },
     "fileId": "6a3Nc/TRFPH6nuXZzn0vPJ",
-    "instance": null,
-    "targetOverrides": null
+    "instance": null
   }
 ]
