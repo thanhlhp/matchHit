@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Prefab, instantiate, Vec3, random, Tween, tween, easing } from 'cc';
+import { _decorator, Component, Node, Prefab, instantiate, Vec3, random, Tween, tween, easing, Vec2 } from 'cc';
 import { setUncaughtExceptionCaptureCallback } from 'process';
 import { DrawLine } from './DrawLine';
 import { ElementScript } from './ElementScript';
@@ -30,6 +30,7 @@ export class GridGenerator extends Component {
             this.cells[i] = [];
             for (let j = -1; j < this.gridSize+1; j++)
             {
+                
                 this.cells[i][j] = null;
             }
         }
@@ -76,6 +77,7 @@ export class GridGenerator extends Component {
                 this.cells[i][j].getComponent(ElementScript).isSelect = false;
                 this.cells[i][j].getComponent(ElementScript).isTracing = false;
                 this.cells[i][j].getComponent(ElementScript).stt = 0;
+                this.cells[i][j].getComponent(ElementScript).item.getComponent(ItemScript).ResetListDrop();
             } 
         }
     }
@@ -91,7 +93,7 @@ export class GridGenerator extends Component {
                 this.listCellTraced.push(cell);
                 cell.getComponent(ElementScript).stt = 1;
                 this.idItemCurent = cell.getComponent(ElementScript).item.getComponent(ItemScript).type;
-                console.log(this.idItemCurent);
+     
                 this.ScaleItem(true);
                 return true;
             }else
@@ -140,7 +142,7 @@ export class GridGenerator extends Component {
                 for (let j = 0; j < this.gridSize; j++)
                 {       
                     if(this.cells[i][j].getComponent(ElementScript).item!=null)
-                     if(this.cells[i][j].getComponent(ElementScript).item.getComponent(ItemScript).type == this.idItemCurent)
+                     if(this.cells[i][j].getComponent(ElementScript).item.getComponent(ItemScript).type == this.idItemCurent && this.cells[i][j].getComponent(ElementScript).haveItem)
                         {
                      
                             tween(this.cells[i][j].getComponent(ElementScript).item)
@@ -157,7 +159,7 @@ export class GridGenerator extends Component {
                 for (let j = 0; j < this.gridSize; j++)
                 {
                     if(this.cells[i][j].getComponent(ElementScript).item!=null)
-                        if(this.cells[i][j].getComponent(ElementScript).item.getComponent(ItemScript).type == this.idItemCurent)
+                        if(this.cells[i][j].getComponent(ElementScript).item.getComponent(ItemScript).type == this.idItemCurent&& this.cells[i][j].getComponent(ElementScript).haveItem)
                         {
                              
                                 tween(this.cells[i][j].getComponent(ElementScript).item)
@@ -170,6 +172,97 @@ export class GridGenerator extends Component {
             }
         }
         
+    }
+    CheckCellNull()
+    {
+        for(let i = 0;i<this.gridSize;i++){
+            for(let j = 0;j<this.gridSize;j++)
+            {
+           
+                if(this.cells[i][j].getComponent(ElementScript).haveItem == false)
+                {
+                    // xu ly fill
+                    this.FillHoleCell(this.cells[i][j]);
+                   
+                }
+
+            //day tu ngoai vao hamg tren cung.
+            
+            // check fukk mang xem con null k -->  CheckCellNull()
+
+              
+            }
+        }
+    }
+    DropItems()
+    {
+        for(let i = 0;i<this.gridSize;i++){
+            for(let j = 0;j<this.gridSize;j++)
+            {
+                if(this.cells[i][j].getComponent(ElementScript).item.getComponent(ItemScript).canDrop)
+                {
+                    this.cells[i][j].getComponent(ElementScript).item.getComponent(ItemScript).Drop();
+                }
+                console.log(this.cells[i][j].getComponent(ElementScript).item.getComponent(ItemScript).listDropMove,"O",i,j)
+            }
+    }
+}
+    FillHoleCell(cell:Node)
+    {
+            let haveDropItem = false;
+            let x = cell.getComponent(ElementScript).x;
+            let y = cell.getComponent(ElementScript).y;
+            if(this.cells[x+1][y]!=null)
+                {
+                if(this.cells[x+1][y].getComponent(ElementScript).haveItem&& haveDropItem == false)
+                    {
+                        var newItem = new Node;
+                        newItem = this.cells[x+1][y].getComponent(ElementScript).item;
+                     
+                        this.cells[x][y].getComponent(ElementScript).haveItem = true;   
+                        this.cells[x][y].getComponent(ElementScript).item = newItem;
+                        this.cells[x+1][y].getComponent(ElementScript).haveItem = false;
+                        //this.cells[x+1][y].getComponent(ElementScript).item.getComponent(ItemScript).type = 0;
+                        this.cells[x+1][y].getComponent(ElementScript).item.getComponent(ItemScript).canDrop = true;
+                        this.cells[x+1][y].getComponent(ElementScript).item.getComponent(ItemScript).listDropMove.push(new Vec2(x,y));
+                        haveDropItem = true;
+                        
+                    } 
+                }
+            if (this.cells[x+1][y-1]!=null)
+               {
+                if(this.cells[x+1][y-1].getComponent(ElementScript).haveItem && haveDropItem == false)
+                    {
+                        var newItem = new Node;
+                        newItem = this.cells[x+1][y-1].getComponent(ElementScript).item;
+                        this.cells[x][y].getComponent(ElementScript).haveItem = true;
+                       
+                        this.cells[x][y].getComponent(ElementScript).item = newItem;
+                        this.cells[x+1][y-1].getComponent(ElementScript).haveItem= false;
+                        this.cells[x+1][y-1].getComponent(ElementScript).item.getComponent(ItemScript).canDrop = true;
+                        //this.cells[x+1][y-1].getComponent(ElementScript).item.getComponent(ItemScript).type = 0;
+                        this.cells[x+1][y-1].getComponent(ElementScript).item.getComponent(ItemScript).listDropMove.push(new Vec2(x,y));
+                        haveDropItem = true;
+                    }
+               }
+            if(this.cells[x+1][y+1]!=null)
+               { 
+                if(this.cells[x+1][y+1].getComponent(ElementScript).haveItem && haveDropItem == false)
+                    {  
+                        var newItem = new Node;
+                        newItem = this.cells[x+1][y+1].getComponent(ElementScript).item;
+                        this.cells[x][y].getComponent(ElementScript).haveItem = true;
+                        this.cells[x][y].getComponent(ElementScript).item  = newItem;
+                        this.cells[x+1][y+1].getComponent(ElementScript).haveItem = false;
+                        //this.cells[x+1][y+1].getComponent(ElementScript).item.getComponent(ItemScript).type = 0;
+                        this.cells[x+1][y+1].getComponent(ElementScript).item.getComponent(ItemScript).canDrop = true;
+                        this.cells[x+1][y+1].getComponent(ElementScript).item.getComponent(ItemScript).listDropMove.push(new Vec2(x,y));
+                        haveDropItem = true;
+                    } 
+               }
+
+          
+          
     }
     getRandomNumber(min: number, max: number): number {
         return Math.random() * (max - min) + min;

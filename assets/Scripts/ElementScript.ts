@@ -10,6 +10,7 @@ export class ElementScript extends Component {
     item: Node = null;
     isSelect: boolean = false;
     isTracing: boolean = false;
+    haveItem:boolean = false;
     breakable:boolean = false;
     health: number = 0;
     x:number;
@@ -20,9 +21,18 @@ export class ElementScript extends Component {
       
     }
     start() {
-        
+        this.CheckHavItem();
     }
-
+    CheckHavItem()
+    {
+        if(this.item.getComponent(ItemScript).type>0)
+        {
+            this.haveItem = true;
+        } else 
+        {
+            this.haveItem = false;
+        }
+    }
     CheckTouch()
     { 
         if(InputManager.getInstance().isTouch)
@@ -32,6 +42,7 @@ export class ElementScript extends Component {
             {
                 
                 this.OnTouch();
+                console.log(this.x,this.y);
                // this.isSelect = true;   
             }
             if(this.isTracing && this.stt<grid.listCellTraced.length && this.stt !=0)

@@ -53,7 +53,7 @@ export class InputManager extends Component {
         for (let i = 0;i<this.thisGrid.gridSize;i++)
         {   
                 this.thisGrid.cells[i].forEach(cell=>{    
-                if(cell!=null && cell.getComponent(ElementScript).item!=null &&cell.getComponent(ElementScript).item.getComponent(ItemScript).type!=0  && cell.getComponent(UITransform).getBoundingBox().contains(new Vec2(this.mousePos.x,this.mousePos.y)))
+                if(cell!=null && cell.getComponent(ElementScript).item!=null &&cell.getComponent(ElementScript).haveItem && cell.getComponent(UITransform).getBoundingBox().contains(new Vec2(this.mousePos.x,this.mousePos.y)))
                 {
                     this.isTouch = true;
                     cell.getComponent(ElementScript).isSelect = true;
@@ -91,6 +91,12 @@ export class InputManager extends Component {
                 {
                     console.log("an duoc combo"+this.thisGrid.getComponent(GridGenerator).listCellTraced.length+"type:"+this.thisGrid.getComponent(GridGenerator).listCellTraced[1].getComponent(ElementScript).color);
                     this.ClaimCell();
+                    setTimeout(()=>{
+                        this.thisGrid.CheckCellNull();
+                     },250)
+                     setTimeout(()=>{
+                        this.thisGrid.DropItems();
+                     },500)
                     for(let i = 0;i<this.thisGrid.listLineRender.length;i++)
                     {
                         this.thisGrid.listLineRender[i].destroy();
@@ -112,12 +118,18 @@ export class InputManager extends Component {
         this.thisGrid.getComponent(GridGenerator).listCellTraced.forEach(obj=>{
             if(obj!=null)
             {
+               
                 let item:Node = obj.getComponent(ElementScript).item;
+                obj.getComponent(ElementScript).haveItem = false;
                 item.getComponent(ItemScript).Claim();
-            }
-        
-            
+               
+                // this.ResetListDrop();    
+            }    
          })
+       
+            
+         
+        
     }
     
  
