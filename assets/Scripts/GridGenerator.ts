@@ -1,5 +1,5 @@
 import { _decorator, Component, Node, Prefab, instantiate, Vec3, random, Tween, tween, easing, Vec2 } from 'cc';
-import { setUncaughtExceptionCaptureCallback } from 'process';
+
 import { DrawLine } from './DrawLine';
 import { ElementScript } from './ElementScript';
 import { ItemScript } from './ItemScript';
@@ -175,25 +175,26 @@ export class GridGenerator extends Component {
     }
     CheckCellNull()
     {
-        for(let i = 0;i<this.gridSize;i++){
+        // let check = 0;
+        for(let i = 0;i<this.gridSize-2;i++){
             for(let j = 0;j<this.gridSize;j++)
             {
-           
+                
                 if(this.cells[i][j].getComponent(ElementScript).haveItem == false)
                 {
-                    // xu ly fill
-                    this.FillHoleCell(this.cells[i][j]);
-                   
-                }
+
+                       this.FillHoleCell(this.cells[i][j]);
+                            
+                } 
 
             //day tu ngoai vao hamg tren cung.
             
-            // check fukk mang xem con null k -->  CheckCellNull()
-
-              
+            // check fukk mang xem con null k -->  CheckCellNull()    
             }
         }
+       
     }
+
     DropItems()
     {
         for(let i = 0;i<this.gridSize;i++){
@@ -260,6 +261,9 @@ export class GridGenerator extends Component {
                         haveDropItem = true;
                     } 
                }
+               if(haveDropItem)
+               this.CheckCellNull();
+             
 
           
           
