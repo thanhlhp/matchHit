@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, CCInteger, Vec3, UITransform, Vec2, CCFloat, EventTouch } from 'cc';
+import { _decorator, Component, Node, CCInteger, Vec3, UITransform, Vec2, CCFloat, EventTouch, tween } from 'cc';
 import { GridGenerator } from './GridGenerator';
 import { InputManager } from './InputManager';
 import { ItemScript } from './ItemScript';
@@ -75,6 +75,23 @@ export class ElementScript extends Component {
                 this.isTracing = true;
 
             }  
+    }
+    Claim(cell:Node)
+    {
+        tween(cell.getComponent(ElementScript).item)
+                .call(()=>{
+            
+                })
+                .to(0.25,{scale: new Vec3(0,0,0)})
+                .call(()=>{
+                    cell.getComponent(ElementScript).item = null;
+           
+                })  
+                .call(()=>{
+                    
+                })
+                .start()
+                InputManager.getInstance().thisGrid.ScaleItem(false);
     }
     update(deltaTime: number) 
     {
