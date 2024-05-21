@@ -14,6 +14,7 @@ export class InputManager extends Component {
     thisBoard:Node = null;
     @property(GridGenerator)
     thisGrid:GridGenerator;
+    xPower: number = 0;
     private static instance: InputManager = null;
     public static getInstance(): InputManager {
         if (!InputManager.instance) {
@@ -103,7 +104,7 @@ export class InputManager extends Component {
                     this.ClaimCell();
                      setTimeout(()=>{
                         this.thisGrid.CheckCellNull();
-                     },500)
+                     },1000)
                     for(let i = 0;i<this.thisGrid.listLineRender.length;i++)
                     {
                         this.thisGrid.listLineRender[i].destroy();
@@ -113,24 +114,67 @@ export class InputManager extends Component {
                 {
                     this.thisGrid.ScaleItem(false);
                     this.isTouch = false;
-
+                    
                  
                 }
                 //
             }
             
-         
+            this.xPower = 0;
             this.thisGrid.ResetListCellTraced();
         
     }
     ClaimCell()
     {
         this.thisGrid.getComponent(GridGenerator).listCellTraced.forEach(obj=>{
-            if(obj!=null)
+            if(this.thisGrid.getComponent(GridGenerator).listCellTraced.length<4)
             {
-               obj.getComponent(ElementScript).Claim(obj);   
-              
-            }    
+                if(obj!=null)
+                {
+                   obj.getComponent(ElementScript).Claim(obj,0);   
+                  
+                }   
+            }
+            if(this.thisGrid.getComponent(GridGenerator).listCellTraced.length>=4 &&
+            this.thisGrid.getComponent(GridGenerator).listCellTraced.length<=5)
+            {
+                if(obj!=null)
+                {
+                if(obj.getComponent(ElementScript).stt ==this.thisGrid.getComponent(GridGenerator).listCellTraced.length)
+                    obj.getComponent(ElementScript).Claim(obj,3);
+                    else{
+                        obj.getComponent(ElementScript).Claim(obj,0);
+                    }
+                  
+                }   
+            }
+            if(this.thisGrid.getComponent(GridGenerator).listCellTraced.length>=6 &&
+            this.thisGrid.getComponent(GridGenerator).listCellTraced.length<=8)
+            {
+                if(obj!=null)
+                {
+                if(obj.getComponent(ElementScript).stt ==this.thisGrid.getComponent(GridGenerator).listCellTraced.length)
+                    obj.getComponent(ElementScript).Claim(obj,5);
+                    else{
+                        obj.getComponent(ElementScript).Claim(obj,0);
+                    }
+                  
+                }   
+            }
+            if(this.thisGrid.getComponent(GridGenerator).listCellTraced.length>=9)
+          
+            {
+                if(obj!=null)
+                {
+                if(obj.getComponent(ElementScript).stt ==this.thisGrid.getComponent(GridGenerator).listCellTraced.length)
+                    obj.getComponent(ElementScript).Claim(obj,9);
+                    else{
+                        obj.getComponent(ElementScript).Claim(obj,0);
+                    }
+                  
+                }   
+            }
+           
          })
          
        

@@ -130,8 +130,12 @@ export class GridGenerator extends Component {
                     ||(this.cells[a-1][b-1] == beforeCell)||this.cells[a+1][b+1] == beforeCell
                     ||(this.cells[a-1][b+1] == beforeCell)||(this.cells[a+1][b-1] == beforeCell))
                     {
-                        if(beforeCell.getComponent(ElementScript).item.getComponent(ItemScript).type == cell.getComponent(ElementScript).item.getComponent(ItemScript).type)
+                        if(beforeCell.getComponent(ElementScript).item.getComponent(ItemScript).type == cell.getComponent(ElementScript).item.getComponent(ItemScript).type || 
+                        cell.getComponent(ElementScript).item.getComponent(ItemScript).type == 6 && InputManager.getInstance().xPower<2||
+                        beforeCell.getComponent(ElementScript).item.getComponent(ItemScript).type == 6 && InputManager.getInstance().xPower<2)
                         {
+                            if(cell.getComponent(ElementScript).item.getComponent(ItemScript).type == 6 || beforeCell.getComponent(ElementScript).item.getComponent(ItemScript).type == 6)
+                                InputManager.getInstance().xPower++;
                             this.listCellTraced.push(cell);
                             const line = instantiate(this.line);
                             line.setParent(this.board);
@@ -179,7 +183,7 @@ export class GridGenerator extends Component {
                 for (let j = 0; j < this.gridSize; j++)
                 {
                     if(this.cells[i][j].getComponent(ElementScript).item!=null)
-                        if(this.cells[i][j].getComponent(ElementScript).item.getComponent(ItemScript).type == this.idItemCurent&& this.cells[i][j].getComponent(ElementScript).haveItem)
+                        if(this.cells[i][j].getComponent(ElementScript).item.getComponent(ItemScript).type == this.idItemCurent&& this.cells[i][j].getComponent(ElementScript).haveItem &&this.cells[i][j].getComponent(ElementScript).isTracing == false)
                         {
                              
                                 tween(this.cells[i][j].getComponent(ElementScript).item)

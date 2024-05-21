@@ -83,7 +83,7 @@
       "uuid": "16b90ef2-b05d-4c91-9396-e585fdb1e533@73b7f",
       "displayName": "",
       "id": "73b7f",
-      "name": "Take 001.animation",
+      "name": "idle1.animation",
       "userData": {
         "gltfIndex": 0,
         "wrapMode": 2,
@@ -92,7 +92,17 @@
           "from": 0,
           "to": 1.5333333015441895
         },
-        "events": []
+        "events": [],
+        "embeddedPlayers": [],
+        "editorExtras": {
+          "embeddedPlayerGroups": []
+        },
+        "speed": 1,
+        "auxiliaryCurves": {},
+        "additive": {
+          "enabled": false,
+          "refClip": "16b90ef2-b05d-4c91-9396-e585fdb1e533@73b7f"
+        }
       },
       "ver": "1.0.17",
       "imported": true,
@@ -244,11 +254,15 @@
         "fps": 30,
         "splits": [
           {
-            "name": "Take 001",
+            "name": "idle1",
             "from": 0,
             "to": 1.5333333015441895,
             "wrapMode": 2,
-            "previousId": "73b7f"
+            "previousId": "73b7f",
+            "additive": {
+              "enabled": false,
+              "refClip": "16b90ef2-b05d-4c91-9396-e585fdb1e533@73b7f"
+            }
           }
         ]
       }
@@ -293,6 +307,7 @@
       "scenes": [
         "16b90ef2-b05d-4c91-9396-e585fdb1e533@5cfa6"
       ]
-    }
+    },
+    "mountAllAnimationsOnPrefab": true
   }
 }

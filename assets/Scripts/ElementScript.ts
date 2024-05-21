@@ -1,12 +1,14 @@
-import { _decorator, Component, Node, CCInteger, Vec3, UITransform, Vec2, CCFloat, EventTouch, tween } from 'cc';
+import { _decorator, Component, Node, CCInteger, Vec3, UITransform, Vec2, CCFloat, EventTouch, tween, instantiate, Prefab, RichText } from 'cc';
 import { GridGenerator } from './GridGenerator';
 import { InputManager } from './InputManager';
+import { ItempowerScript } from './ItempowerScript';
 import { ItemScript } from './ItemScript';
 const { ccclass, property } = _decorator;
 
 @ccclass('ElementScript')
 export class ElementScript extends Component {
     @property(CCInteger) color:number = 0;
+    @property(Prefab) itemPowerX = null;
     item: Node = null;
     isSelect: boolean = false;
     isTracing: boolean = false;
@@ -16,6 +18,7 @@ export class ElementScript extends Component {
     x:number;
     y:number;
     stt:number;
+
     onLoad()
     {
       
@@ -76,15 +79,26 @@ export class ElementScript extends Component {
 
             }  
     }
-    Claim(cell:Node)
+    Claim(cell:Node,xPower:Number)
     {
         tween(cell.getComponent(ElementScript).item)
                 .call(()=>{
             
                 })
-                .to(0.25,{scale: new Vec3(0,0,0)})
+                .to(0.5,{scale: new Vec3(0,0,0)})
                 .call(()=>{
-                    cell.getComponent(ElementScript).item = null;
+                    console.log(xPower);
+                    if(xPower==0)
+                        cell.getComponent(ElementScript).item = null;
+                    else{
+                        let item = instantiate(this.itemPowerX);
+                        item.setParent(InputManager.getInstance().thisBoard);
+                        item.setPosition(this.node.position);
+                        item.setSiblingIndex(InputManager.getInstance().thisGrid.getComponent(GridGenerator).indexItem)
+                        InputManager.getInstance().thisGrid.getComponent(GridGenerator).indexItem++;
+                        item.getComponent(ItempowerScript).text.string = "<color=#00ff00>x</color><color=#0fffff>"+xPower+"</color>";
+                        cell.getComponent(ElementScript).item = item;
+                    }
            
                 })  
                 .call(()=>{
@@ -92,6 +106,7 @@ export class ElementScript extends Component {
                 })
                 .start()
                 InputManager.getInstance().thisGrid.ScaleItem(false);
+                
     }
     update(deltaTime: number) 
     {
