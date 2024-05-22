@@ -86,13 +86,14 @@
       "name": "Attack1.animation",
       "userData": {
         "gltfIndex": 0,
-        "wrapMode": 2,
-        "sample": 30,
+        "wrapMode": 0,
+        "sample": 60,
         "span": {
           "from": 0,
           "to": 0.8666666746139526
         },
-        "events": []
+        "events": [],
+        "speed": 1.2
       },
       "ver": "1.0.17",
       "imported": true,
@@ -247,8 +248,10 @@
             "name": "Attack1",
             "from": 0,
             "to": 0.8666666746139526,
-            "wrapMode": 2,
-            "previousId": "73b7f"
+            "wrapMode": 0,
+            "previousId": "73b7f",
+            "fps": 60,
+            "speed": 1.2
           }
         ]
       }
