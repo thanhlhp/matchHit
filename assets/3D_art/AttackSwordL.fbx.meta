@@ -296,6 +296,7 @@
       "scenes": [
         "06f6565c-2983-4e73-a28c-724493980b50@d2fb9"
       ]
-    }
+    },
+    "mountAllAnimationsOnPrefab": false
   }
 }

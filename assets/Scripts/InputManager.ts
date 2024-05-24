@@ -3,8 +3,10 @@ import { DrawLine } from './DrawLine';
 import { ElementScript } from './ElementScript';
 import { GamePlayManager } from './GamePlayManager';
 import { GridGenerator } from './GridGenerator';
+import { ItempowerScript } from './ItempowerScript';
 import { ItemScript } from './ItemScript';
 import { PlayerController } from './PlayerController';
+import { PlayerStats } from './PlayerStats';
 const { ccclass, property } = _decorator;
 
 @ccclass('InputManager')
@@ -16,7 +18,7 @@ export class InputManager extends Component {
     thisBoard:Node = null;
     @property(GridGenerator)
     thisGrid:GridGenerator;
-    xPower: number = 0;
+    xPower: number = 1;
     private static instance: InputManager = null;
     public static getInstance(): InputManager {
         if (!InputManager.instance) {
@@ -32,7 +34,7 @@ export class InputManager extends Component {
         } else {
             this.destroy(); // Destroy any additional instances created
         }
-   
+      // this.isPlay = false;
         
     }
     start(): void {
@@ -127,13 +129,15 @@ export class InputManager extends Component {
                 //
             } 
             this.thisGrid.ScaleItem(false);
-            this.xPower = 0;
+            this.xPower = 1;
             this.thisGrid.ResetListCellTraced();
         
     }
     PlayFight()
     {       this.isPlay = true;
-            GamePlayManager.getInstance().character.getComponent(PlayerController).PlayAnimation( this.thisGrid.getComponent(GridGenerator).listCellTraced.length);    
+    
+            //GamePlayManager.getInstance().playerSkeletalAnimation.play("Attack3");
+            GamePlayManager.getInstance().PlayAnimation( this.thisGrid.getComponent(GridGenerator).listCellTraced.length,this.xPower);    
     }
     getRandomNumber(min: number, max: number): number {
         return Math.random() * (max - min) + min;
@@ -141,12 +145,16 @@ export class InputManager extends Component {
     ClaimCell()
     {
         this.thisGrid.getComponent(GridGenerator).listCellTraced.forEach(obj=>{
+            if(obj.getComponent(ElementScript).item.getComponent(ItempowerScript)!=null)
+            {
+                this.xPower = obj.getComponent(ElementScript).item.getComponent(ItempowerScript).xpower;
+            }
             if(this.thisGrid.getComponent(GridGenerator).listCellTraced.length<4)
             {
                 if(obj!=null)
                 {
                    obj.getComponent(ElementScript).Claim(obj,0);   
-                  
+                   //this.xPower = 1;
                 }   
             }
             if(this.thisGrid.getComponent(GridGenerator).listCellTraced.length>=4 &&
@@ -155,8 +163,13 @@ export class InputManager extends Component {
                 if(obj!=null)
                 {
                 if(obj.getComponent(ElementScript).stt ==this.thisGrid.getComponent(GridGenerator).listCellTraced.length)
+                {
                     obj.getComponent(ElementScript).Claim(obj,3);
+                    // this.xPower = 3;
+                }
+                  
                     else{
+                        //this.xPower = 1;
                         obj.getComponent(ElementScript).Claim(obj,0);
                     }
                   
@@ -168,8 +181,13 @@ export class InputManager extends Component {
                 if(obj!=null)
                 {
                 if(obj.getComponent(ElementScript).stt ==this.thisGrid.getComponent(GridGenerator).listCellTraced.length)
+                {
                     obj.getComponent(ElementScript).Claim(obj,5);
+                    // this.xPower = 5;
+                }
+                    
                     else{
+                        //this.xPower = 1;
                         obj.getComponent(ElementScript).Claim(obj,0);
                     }
                   
@@ -181,8 +199,13 @@ export class InputManager extends Component {
                 if(obj!=null)
                 {
                 if(obj.getComponent(ElementScript).stt ==this.thisGrid.getComponent(GridGenerator).listCellTraced.length)
+                {
                     obj.getComponent(ElementScript).Claim(obj,9);
+                    // this.xPower = 9;
+                }
+                   
                     else{
+                        this.xPower = 1;
                         obj.getComponent(ElementScript).Claim(obj,0);
                     }
                   

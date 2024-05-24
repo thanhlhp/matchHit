@@ -1,6 +1,8 @@
 import { _decorator, Component, Node, SkeletalAnimation } from 'cc';
+import { DemonStats } from './DemonStats';
 import { GamePlayManager } from './GamePlayManager';
 import { InputManager } from './InputManager';
+import { PlayerStats } from './PlayerStats';
 const { ccclass, property } = _decorator;
 
 @ccclass('DemonController')
@@ -31,6 +33,7 @@ export class DemonController extends Component {
         if(this.numberAtk>0 && this.isPlay== false)
         {
             this.demonAnimation.play(animString);
+            console.log(animString)
             this.isPlay = true;
            
         }
@@ -46,6 +49,7 @@ export class DemonController extends Component {
     OnAnimationFinished()
     {
         this.numberAtk--;
+        GamePlayManager.getInstance().character.getComponent(PlayerStats).takeDamage(GamePlayManager.getInstance().character.getComponent(PlayerStats).damage);
         this.isPlay = false;
         this.PlayAnimation( this.numberAtk);
         console.log(this.numberAtk,this.isPlay)

@@ -6,7 +6,6 @@ const { ccclass, property } = _decorator;
 @ccclass('ItemScript')
 export class ItemScript extends Component {
     @property(CCInteger) type:number = 0;
-
     canDrop:boolean = false;
     listDropMove:Vec2[]=[];
     start() {

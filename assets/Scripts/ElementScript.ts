@@ -92,6 +92,7 @@ export class ElementScript extends Component {
                         cell.getComponent(ElementScript).item = null;
                     else{
                         let item = instantiate(this.itemPowerX);
+                        item.getComponent(ItempowerScript).xpower = xPower;
                         item.setParent(InputManager.getInstance().thisBoard);
                         item.setPosition(this.node.position);
                         item.setSiblingIndex(InputManager.getInstance().thisGrid.getComponent(GridGenerator).indexItem)

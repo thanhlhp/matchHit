@@ -310,7 +310,7 @@
         "16b90ef2-b05d-4c91-9396-e585fdb1e533@5cfa6"
       ]
     },
-    "mountAllAnimationsOnPrefab": true,
+    "mountAllAnimationsOnPrefab": false,
     "materials": {
       "16b90ef2-b05d-4c91-9396-e585fdb1e533@55b43": {
         "__type__": "cc.Material",

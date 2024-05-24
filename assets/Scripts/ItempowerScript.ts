@@ -4,6 +4,7 @@ const { ccclass, property } = _decorator;
 @ccclass('ItempowerScript')
 export class ItempowerScript extends Component {
     @property(RichText) text;
+    xpower:number = 1;
     start() {
 
     }
