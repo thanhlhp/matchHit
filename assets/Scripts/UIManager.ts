@@ -8,6 +8,8 @@ export class UIManager extends Component {
     @property(Node)
     hpDemon:Node;
     @property(Node)
+    popupWin:Node;
+    @property(Node)
     posTextDame1:Node = null;
     @property(Node)
     posTextDame2:Node = null;
