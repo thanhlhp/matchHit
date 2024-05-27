@@ -16,8 +16,9 @@ export class LevelScript extends Component {
     map:Node = null;
     @property(Node)
     spawnPosDemon:Node;
+  
     start() {
-
+        console.log(this.demonCount);
     }
     GoNextDemon()
     {
@@ -36,7 +37,8 @@ export class LevelScript extends Component {
                 demon.setPosition(this.spawnPosDemon.position);
             } else
             {
-                console.log("win");
+                UIManager.getInstance().OpenPopupWin();
+                console.log("win",this.demonCount);
             }
         },0.5)
        

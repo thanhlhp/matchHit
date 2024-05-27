@@ -39,6 +39,7 @@ export class DemonController extends Component {
         }
         if(this.numberAtk ==0)
         {
+            this.demonAnimation.play("idle1"); 
             InputManager.getInstance().isPlay = false;
         }
         

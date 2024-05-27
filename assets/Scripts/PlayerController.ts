@@ -64,11 +64,13 @@ export class PlayerController extends Component {
               
           
            
-        }
+        } 
         if(this.numberAtk ==0)
         {
+            this.CharacterAnim.play("idle1"); 
             if(GamePlayManager.getInstance().demon!=null)
             {
+              
                 GamePlayManager.getInstance().demon.getComponent(DemonController).PlayAnimation(this.numberAtkdemon);
                 this.numberAtkdemon = 0;
             } else 
@@ -97,9 +99,10 @@ export class PlayerController extends Component {
             this.PlayAnimation( this.numberAtk,this.xPower);
         } else
         {
-        this.numberAtk= 0;
+            this.numberAtk= 0;
           this.isPlay = false;
           InputManager.getInstance().isPlay = false;
+          this.CharacterAnim.play("idle1");  
         }
        
      

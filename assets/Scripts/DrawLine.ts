@@ -6,14 +6,12 @@ export class DrawLine extends Component {
     @property(Graphics)
     graphics: Graphics | null = null;
     start() {
-   
-            this.graphics.strokeColor.fromHEX('#ffffff');
-            this.graphics.lineWidth = 10;       
+       
     }
 
     drawLine(startPos: Vec3, endPos: Vec3) {
-            this.graphics.strokeColor.fromHEX('#ffffff');
-            this.graphics.lineWidth = 10;    
+         
+            this.graphics.lineWidth = 15;    
             console.log("ve line ne",startPos,endPos);
             // Move pen to start position
             this.graphics.moveTo(startPos.x, startPos.y);

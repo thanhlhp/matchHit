@@ -29,11 +29,8 @@ export class InputManager extends Component {
  
     onLoad()
     {
-        if (InputManager.instance === null) {
             InputManager.instance = this;
-        } else {
-            this.destroy(); // Destroy any additional instances created
-        }
+     
       // this.isPlay = false;
         
     }

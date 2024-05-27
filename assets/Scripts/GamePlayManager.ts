@@ -25,13 +25,10 @@ export class GamePlayManager extends Component {
  
     onLoad()
     {
-        if (GamePlayManager.instance === null) {
+     
             GamePlayManager.instance = this;
-        } else {
-            this.destroy(); // Destroy any additional instances created
-        }
-        
-        console.log()
+     
+
        
         
     }

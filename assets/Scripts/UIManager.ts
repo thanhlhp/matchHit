@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, ScrollBar, ProgressBar, Vec3, instantiate, Prefab, RichText } from 'cc';
+import { _decorator, Component, Node, ScrollBar, ProgressBar, Vec3, instantiate, Prefab, RichText, Scene, Director, director, Label } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('UIManager')
@@ -13,6 +13,8 @@ export class UIManager extends Component {
     posTextDame1:Node = null;
     @property(Node)
     posTextDame2:Node = null;
+    @property(Label)
+    text: Label;
     @property(Prefab)
     textDame: Prefab;
     private static instance: UIManager = null;
@@ -24,15 +26,22 @@ export class UIManager extends Component {
     }
     onLoad()
     {
-        if (UIManager.instance === null) {
+
             UIManager.instance = this;
-        } else {
-            this.destroy(); // Destroy any additional instances created
-        }
+    
     }
     start() {
         this.hpPlayer.getComponent(ProgressBar).progress = 1;
         this.hpDemon.getComponent(ProgressBar).progress = 1;
+    }
+    OpenPopupWin()
+    {
+        this.popupWin.active = true;
+    }
+    ClosePopupWin()
+    {
+        this.popupWin.active = false;
+        director.loadScene("GameScene");
     }
     SpawnTextDame1(s:string)
     {
