@@ -2,6 +2,7 @@ import { _decorator, Component, Node, SkeletalAnimation, tween, animation, Anima
 import { DemonController } from './DemonController';
 import { DemonStats } from './DemonStats';
 import { GamePlayManager } from './GamePlayManager';
+import { GridGenerator } from './GridGenerator';
 import { InputManager } from './InputManager';
 import { PlayerStats } from './PlayerStats';
 const { ccclass, property } = _decorator;

@@ -105,7 +105,6 @@ export class InputManager extends Component {
             {
                 if(this.thisGrid.getComponent(GridGenerator).listCellTraced.length>=2 )
                 {
-                    console.log("an duoc combo"+this.thisGrid.getComponent(GridGenerator).listCellTraced.length+"type:"+this.thisGrid.getComponent(GridGenerator).listCellTraced[1].getComponent(ElementScript).color);
                     this.ClaimCell();
                     this.PlayFight();
                      setTimeout(()=>{

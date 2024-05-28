@@ -1,0 +1,102 @@
+{
+  "ver": "2.3.12",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "c6634715-f873-4a60-9eb3-a17cbb8f7f3c",
+  "files": [
+    "__original-animation-0.cconb"
+  ],
+  "subMetas": {
+    "73b7f": {
+      "importer": "gltf-animation",
+      "uuid": "c6634715-f873-4a60-9eb3-a17cbb8f7f3c@73b7f",
+      "displayName": "",
+      "id": "73b7f",
+      "name": "BeingHit.animation",
+      "userData": {
+        "gltfIndex": 0,
+        "wrapMode": 0,
+        "sample": 30,
+        "span": {
+          "from": 0,
+          "to": 0.4000000059604645
+        },
+        "events": [],
+        "speed": 1.2
+      },
+      "ver": "1.0.17",
+      "imported": true,
+      "files": [
+        ".cconb"
+      ],
+      "subMetas": {}
+    },
+    "8e6f2": {
+      "importer": "gltf-scene",
+      "uuid": "c6634715-f873-4a60-9eb3-a17cbb8f7f3c@8e6f2",
+      "displayName": "",
+      "id": "8e6f2",
+      "name": "NormZom_BeingHit.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [],
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "animationImportSettings": [
+      {
+        "name": "Take 001",
+        "duration": 0.4000000059604645,
+        "fps": 30,
+        "splits": [
+          {
+            "name": "BeingHit",
+            "from": 0,
+            "to": 0.4000000059604645,
+            "wrapMode": 0,
+            "previousId": "73b7f",
+            "speed": 1.2
+          }
+        ]
+      }
+    ],
+    "redirect": "c6634715-f873-4a60-9eb3-a17cbb8f7f3c@8e6f2",
+    "lods": {
+      "enable": false,
+      "hasBuiltinLOD": false,
+      "options": [
+        {
+          "screenRatio": 0.25,
+          "faceCount": 1
+        },
+        {
+          "screenRatio": 0.125,
+          "faceCount": 0.25
+        },
+        {
+          "screenRatio": 0.01,
+          "faceCount": 0.1
+        }
+      ]
+    },
+    "assetFinder": {
+      "meshes": [],
+      "skeletons": [],
+      "textures": [],
+      "materials": [],
+      "scenes": [
+        "c6634715-f873-4a60-9eb3-a17cbb8f7f3c@8e6f2"
+      ]
+    }
+  }
+}

@@ -1,4 +1,6 @@
 import { _decorator, Component, Node, CCInteger, UI } from 'cc';
+import { CameraController } from './CameraController';
+import { GamePlayManager } from './GamePlayManager';
 import { UIManager } from './UIManager';
 const { ccclass, property } = _decorator;
 
@@ -21,6 +23,7 @@ export class PlayerStats extends Component {
     takeDamage(amount: number) {
         this.hp -= amount;
         UIManager.getInstance().SpawnTextDame1(amount.toString());
+        GamePlayManager.getInstance().mainCamera.getComponent(CameraController).PanCam();
         UIManager.getInstance().updateHpPlayer(this.hp/this.hpBase);
         if (this.hp <= 0) {
             this.die();

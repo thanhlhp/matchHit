@@ -10,6 +10,7 @@ export class DemonController extends Component {
     @property(SkeletalAnimation) 
     demonAnimation :SkeletalAnimation = null;
     numberAtk:number;
+    animString:string;
     isPlay:boolean = false;
     onLoad()
     {
@@ -23,37 +24,59 @@ export class DemonController extends Component {
        
     }
     start() {
-        this.demonAnimation.play("idle1");  
+        this.demonAnimation.play("Idle");  
     }
     PlayAnimation(count:number) {
-        let animString = "Attack1";
+        this.animString = "Attack";
         this.numberAtk = count;
         
         // Lưu trữ callback cho animation này
         if(this.numberAtk>0 && this.isPlay== false)
         {
-            this.demonAnimation.play(animString);
-            console.log(animString)
+            this.demonAnimation.play(this.animString);
+            console.log(this.animString)
             this.isPlay = true;
            
         }
         if(this.numberAtk ==0)
         {
-            this.demonAnimation.play("idle1"); 
+            this.demonAnimation.play("Idle"); 
             InputManager.getInstance().isPlay = false;
         }
         
+    }
+    AnimTakeDame()
+    {
+        this.animString = "BeingHit";
+        this.demonAnimation.play(this.animString);
+
+    }
+    AnimDead()
+    {
+        this.animString = "Death";
+        this.demonAnimation.play(this.animString);
+
     }
     getRandomNumber(min: number, max: number): number {
         return Math.random() * (max - min) + min;
     }
     OnAnimationFinished()
-    {
-        this.numberAtk--;
-        GamePlayManager.getInstance().character.getComponent(PlayerStats).takeDamage(GamePlayManager.getInstance().character.getComponent(PlayerStats).damage);
-        this.isPlay = false;
-        this.PlayAnimation( this.numberAtk);
-        console.log(this.numberAtk,this.isPlay)
+    {   
+        if(this.animString =="Attack")
+        {
+            
+            this.numberAtk--;
+            GamePlayManager.getInstance().character.getComponent(PlayerStats).takeDamage(GamePlayManager.getInstance().character.getComponent(PlayerStats).damage);
+            this.isPlay = false;
+            this.PlayAnimation( this.numberAtk);
+            console.log(this.numberAtk,this.isPlay)
+        }
+        if(this.animString =="Death")
+        {
+            
+            this.node.destroy();
+        }
+    
     }
 
     update(deltaTime: number) {
