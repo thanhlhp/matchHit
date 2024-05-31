@@ -13,18 +13,6 @@ export class CellEditor {
     id:number = 0
     @property
     hp: number = 0;
-   
- 
-
-    // constructor(hp: number, atk: number) {
-    //     this.hp = hp;
-    //     this.atk = atk;
-    // }
-
-    // updateStats(newHp: number, newAtk: number) {
-    //     this.hp = newHp;
-    //     this.atk = newAtk;
-    // }
 }
 @ccclass('DemonEditor')
 export class DemonEditor {
@@ -59,7 +47,7 @@ export class LevelScript extends Component {
     demonList:DemonEditor[] = new Array(4);
     levelHolder:LevelHolder;
     @property(CellEditor)
-    listCellEditor:CellEditor[][] = new Array(new Array(36))
+    listCellEditor:CellEditor[] = new Array(36)
     onLoad()
     {
         this.demonCount = 0;

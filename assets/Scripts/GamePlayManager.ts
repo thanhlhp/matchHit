@@ -1,4 +1,5 @@
 import { _decorator, Component, Node, UITransform, SkeletalAnimation, resources, instantiate, Prefab } from 'cc';
+import { GridGenerator } from './GridGenerator';
 import { LevelScript } from './LevelScript';
 import { PlayerController } from './PlayerController';
 import { PlayerStats } from './PlayerStats';
@@ -16,7 +17,8 @@ export class GamePlayManager extends Component {
     levelHolder:Node;
     @property(Node)
     mainCamera:Node;
-
+    @property(Node)
+    thisGrid:Node;
 
     private static instance: GamePlayManager = null;
     public static getInstance(): GamePlayManager {
@@ -30,12 +32,12 @@ export class GamePlayManager extends Component {
     {
      
             GamePlayManager.instance = this;
-            this.LoadLevel();
+        
 
        
         
     }
-    LoadLevel()
+    LoadLevel(calllback)
     {
         resources.load('levels/level', Prefab, (err, prefab) => {
             if (err) {
@@ -46,13 +48,14 @@ export class GamePlayManager extends Component {
             this.level = newNode;
             this.level.setParent(this.levelHolder);
         });
+        this.scheduleOnce(calllback,0.5);
     }
     PlayAnimation(a:number,b:number)
     {
         this.character.getComponent(PlayerController).PlayAnimation(a,b);
     }
     start() {
-       
+        this.LoadLevel(this.thisGrid.getComponent(GridGenerator).GridGen());
         this.level.getComponent(LevelScript).GoNextDemon();
         console.log("NextLvel");
         

@@ -29,9 +29,11 @@ export class ElementScript extends Component {
     start() {
 
     }
-    CheckHavItem()
+    Init(breakable:boolean,id:number,hp:number)
     {
-   
+        this.idItem = id;
+        this.breakable = breakable;
+        this.health = hp;
     }
     CheckTouch()
     { 

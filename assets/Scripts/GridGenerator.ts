@@ -2,8 +2,10 @@ import { _decorator, Component, Node, Prefab, instantiate, Vec3, random, Tween, 
 
 import { DrawLine } from './DrawLine';
 import { ElementScript } from './ElementScript';
+import { GamePlayManager } from './GamePlayManager';
 import { InputManager } from './InputManager';
 import { ItemScript } from './ItemScript';
+import { LevelScript } from './LevelScript';
 const { ccclass, property } = _decorator;
 
 @ccclass('GridGenerator')
@@ -40,30 +42,66 @@ export class GridGenerator extends Component {
     }
     GridGen()
     {
+        let dem = 0;
+        let level = GamePlayManager.getInstance().level.getComponent(LevelScript);
         for (let i = 0; i <= this.gridSize; i++) {
-            for (let j = 0; j < this.gridSize; j++) {
-                let index =Math.round(this.getRandomNumber(0,this.cellPrefabs.length-1));   
-                const cell = instantiate(this.box); // Create a new cell from the prefab
-                cell.setParent(this.board);
-                const posx = j * this.cellSize - (this.gridSize / 2) * this.cellSize + this.cellSize / 2;
-                const posy = i * this.cellSize - (this.gridSize / 2) * this.cellSize + this.cellSize / 2;
-                cell.setPosition(new Vec3(posx, posy, 0));
-                cell.setSiblingIndex(this.indexCell);
-                this.indexCell++;
-                const element = instantiate(this.cellPrefabs[index])
-                element.setParent(this.board)
-                element.setPosition(cell.position);
-                element.setSiblingIndex(this.indexItem)
-                this.indexItem++;
-                cell.getComponent(ElementScript).item = element;
-                if(this.cells[i][j] == null)
-                {
-                    this.cells[i][j] = cell;
-                    this.cells[i][j].getComponent(ElementScript).x = i;
-                    this.cells[i][j].getComponent(ElementScript).y = j;
+            if(i<this.gridSize)
+            {
+                for (let j = 0; j < this.gridSize; j++) {
+                     
+                    const cell = instantiate(this.box); // Create a new cell from the prefab
+                    cell.setParent(this.board);
+                    const posx = j * this.cellSize - (this.gridSize / 2) * this.cellSize + this.cellSize / 2;
+                    const posy = i * this.cellSize - (this.gridSize / 2) * this.cellSize + this.cellSize / 2;
+                    cell.setPosition(new Vec3(posx, posy, 0));
+                    cell.setSiblingIndex(this.indexCell);
+                    cell.getComponent(ElementScript).Init(level.listCellEditor[dem].breakable,level.listCellEditor[dem].id,level.listCellEditor[dem].hp)
+                    this.indexCell++;
+                    if(cell.getComponent(ElementScript).breakable == false)
+                    {
+                        cell.getComponent(ElementScript).breakableLayer.active =true;
+                    }
+                    const element = instantiate(this.cellPrefabs[cell.getComponent(ElementScript).idItem]);
+                    element.setParent(this.board)
+                    element.setPosition(cell.position);
+                    element.setSiblingIndex(this.indexItem)
+                    this.indexItem++;
+                    cell.getComponent(ElementScript).item = element;
+                    if(this.cells[i][j] == null)
+                    {
+                        this.cells[i][j] = cell;
+                        this.cells[i][j].getComponent(ElementScript).x = i;
+                        this.cells[i][j].getComponent(ElementScript).y = j;
+                    }
+                        
                 }
-                    
+            } else
+            {
+                for (let j = 0; j < this.gridSize; j++) {
+                    let index =Math.round(this.getRandomNumber(0,this.cellPrefabs.length-1));   
+                    const cell = instantiate(this.box); // Create a new cell from the prefab
+                    cell.setParent(this.board);
+                    const posx = j * this.cellSize - (this.gridSize / 2) * this.cellSize + this.cellSize / 2;
+                    const posy = i * this.cellSize - (this.gridSize / 2) * this.cellSize + this.cellSize / 2;
+                    cell.setPosition(new Vec3(posx, posy, 0));
+                    cell.setSiblingIndex(this.indexCell);
+                    this.indexCell++;
+                    const element = instantiate(this.cellPrefabs[index])
+                    element.setParent(this.board)
+                    element.setPosition(cell.position);
+                    element.setSiblingIndex(this.indexItem)
+                    this.indexItem++;
+                    cell.getComponent(ElementScript).item = element;
+                    if(this.cells[i][j] == null)
+                    {
+                        this.cells[i][j] = cell;
+                        this.cells[i][j].getComponent(ElementScript).x = i;
+                        this.cells[i][j].getComponent(ElementScript).y = j;
+                    }
+                        
+                }
             }
+        
         }
     }
     FillCellUper()
