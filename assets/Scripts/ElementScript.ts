@@ -10,9 +10,12 @@ export class ElementScript extends Component {
     @property(CCInteger) color:number = 0;
     @property(Prefab) itemPowerX = null;
     item: Node = null;
+    @property(Node)
+    breakableLayer:Node;
     isSelect: boolean = false;
     isTracing: boolean = false;
     haveItem:boolean = false;
+    idItem:number = 0;
     breakable:boolean = false;
     health: number = 0;
     x:number;
@@ -24,17 +27,11 @@ export class ElementScript extends Component {
       
     }
     start() {
-        this.CheckHavItem();
+
     }
     CheckHavItem()
     {
-        if(this.item.getComponent(ItemScript).type>0)
-        {
-            this.haveItem = true;
-        } else 
-        {
-            this.haveItem = false;
-        }
+   
     }
     CheckTouch()
     { 

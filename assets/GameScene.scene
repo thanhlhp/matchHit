@@ -688,6 +688,9 @@
         "__id__": 21
       }
     ],
+    "listCellEditor": [
+      []
+    ],
     "_id": "37r/xXOIpPdL9GWoKETPuK"
   },
   {
@@ -4384,6 +4387,9 @@
       {
         "__id__": 112
       }
+    ],
+    "listCellEditor": [
+      []
     ],
     "_id": "94kNktrcFFJpVhvMZeAbbs"
   },
