@@ -2,6 +2,7 @@ import { _decorator, Component, Node, Prefab, instantiate, Scene } from 'cc';
 import { DemonStats } from './DemonStats';
 import { GamePlayManager } from './GamePlayManager';
 import { InputManager } from './InputManager';
+import { ItemPhaseScript } from './ItemPhaseScript';
 import { LevelHolder } from './LevelHolder';
 import { UIManager } from './UIManager';
 const { ccclass, property } = _decorator;
@@ -45,12 +46,14 @@ export class LevelScript extends Component {
     spawnPosDemon:Node;
     @property(DemonEditor)
     demonList:DemonEditor[] = new Array(4);
+    @property(LevelHolder)
     levelHolder:LevelHolder;
     @property(CellEditor)
     listCellEditor:CellEditor[] = new Array(36)
     onLoad()
     {
-        this.demonCount = 0;
+        //this.demonCount = 0;
+        if(this.levelHolder == null)
         this.levelHolder = GamePlayManager.getInstance().levelHolder.getComponent(LevelHolder);
     }
    
@@ -60,16 +63,22 @@ export class LevelScript extends Component {
     }
     GoNextDemon()
     {
+      
+       
         this.demonCount++;
         this.scheduleOnce(()=>{
             if(this.demonCount<=2)
-            {
-              
-                let demon =  instantiate(this.levelHolder.demonPbs[this.demonList[this.demonCount].id]);
+            {  
+                UIManager.getInstance().listPhaseItem[this.demonCount-1].getComponent(ItemPhaseScript).ChangeType(1);
+                if(this.demonCount-2>=0)
+                {
+                    UIManager.getInstance().listPhaseItem[this.demonCount-2].getComponent(ItemPhaseScript).ChangeType(2);
+                }
+                let demon =  instantiate(this.levelHolder.getComponent(LevelHolder).demonPbs[this.demonList[this.demonCount].id]);
                 demon.getComponent(DemonStats).hp = this.demonList[this.demonCount].hp;
                 demon.getComponent(DemonStats).damage = this.demonList[this.demonCount].atk;
                 demon.setParent(this.map);
-                
+                //UIManager.getInstance().text.string = GamePlayManager.getInstance().level.getComponent(LevelScript).demonCount.toString();
                 GamePlayManager.getInstance().demon = demon;
                 UIManager.getInstance().updateHpDemon(1);
                 demon.setPosition(this.spawnPosDemon.position);

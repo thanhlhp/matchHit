@@ -60,7 +60,7 @@ export class InputManager extends Component {
             for (let i = 0;i<=this.thisGrid.gridSize;i++)
             {   
                     this.thisGrid.cells[i].forEach(cell=>{    
-                    if(cell!=null && cell.getComponent(ElementScript).item!=null && cell.getComponent(ElementScript).item.getComponent(UITransform).getBoundingBox().contains(new Vec2(this.mousePos.x,this.mousePos.y)))
+                    if(cell!=null && cell.getComponent(ElementScript).item!=null &&cell.getComponent(ElementScript).breakable == true  && cell.getComponent(ElementScript).item.getComponent(UITransform).getBoundingBox().contains(new Vec2(this.mousePos.x,this.mousePos.y)))
                     {
                         this.isTouch = true;
                         cell.getComponent(ElementScript).isSelect = true;
@@ -83,7 +83,7 @@ export class InputManager extends Component {
         for (let i = 0;i<=this.thisGrid.gridSize;i++)
         {
                 this.thisGrid.cells[i].forEach(cell=>{
-                    if(cell!=null && cell.getComponent(ElementScript).item.getComponent(UITransform).getBoundingBox().contains(new Vec2(this.mousePos.x,this.mousePos.y)))
+                    if(cell!=null && cell.getComponent(ElementScript).breakable == true && cell.getComponent(ElementScript).item.getComponent(UITransform).getBoundingBox().contains(new Vec2(this.mousePos.x,this.mousePos.y)))
                     {
                         cell.getComponent(ElementScript).isSelect = true;
                         cell.getComponent(ElementScript).CheckTouch();

@@ -60,20 +60,25 @@ export class GridGenerator extends Component {
                     if(cell.getComponent(ElementScript).breakable == false)
                     {
                         cell.getComponent(ElementScript).breakableLayer.active =true;
+                        cell.getComponent(ElementScript).item = null;
+                    } else
+                    {
+                        console.log("sssssss");
+                        const element = instantiate(this.cellPrefabs[cell.getComponent(ElementScript).idItem]);
+                        element.setParent(this.board)
+                        element.setPosition(cell.position);
+                        element.setSiblingIndex(this.indexItem)
+                        this.indexItem++;
+                        cell.getComponent(ElementScript).item = element;
                     }
-                    const element = instantiate(this.cellPrefabs[cell.getComponent(ElementScript).idItem]);
-                    element.setParent(this.board)
-                    element.setPosition(cell.position);
-                    element.setSiblingIndex(this.indexItem)
-                    this.indexItem++;
-                    cell.getComponent(ElementScript).item = element;
+           
                     if(this.cells[i][j] == null)
                     {
                         this.cells[i][j] = cell;
                         this.cells[i][j].getComponent(ElementScript).x = i;
                         this.cells[i][j].getComponent(ElementScript).y = j;
                     }
-                        
+                dem++;      
                 }
             } else
             {
@@ -155,10 +160,8 @@ export class GridGenerator extends Component {
                  
                 return true;
             }else
-            {
-                
+            {          
                 //Xu ly xung quanh cell
-           
                 let a = cell.getComponent(ElementScript).x;
                 let b = cell.getComponent(ElementScript).y;
                 let beforeCell = this.listCellTraced[this.listCellTraced.length-1];
@@ -253,7 +256,7 @@ export class GridGenerator extends Component {
             for(let j = 0;j<this.gridSize;j++)
             {
                 
-                if(this.cells[i][j].getComponent(ElementScript).item == null)
+                if(this.cells[i][j].getComponent(ElementScript).item == null && this.cells[i][j].getComponent(ElementScript).breakable == true)
                 {
 
                     this.FillHoleCell(this.cells[i][j]);
@@ -263,7 +266,10 @@ export class GridGenerator extends Component {
             }
         }
         this.FillCellUper();
-        if (this.CheckBoard()== false) this.CheckCellNull() 
+        this.scheduleOnce(()=>{
+            if (this.CheckBoard()== false) this.CheckCellNull() 
+        },0.3)
+       
       
 
       
@@ -273,7 +279,7 @@ export class GridGenerator extends Component {
     CheckBoard(){
         for(let i = 0;i<this.gridSize;i++)
             for(let j = 0;j<this.gridSize;j++) {
-                if(this.cells[i][j].getComponent(ElementScript).item == null) {
+                if(this.cells[i][j].getComponent(ElementScript).item == null && this.cells[i][j].getComponent(ElementScript).breakable == true) {
                     return false;
                 }
             }
@@ -325,15 +331,13 @@ export class GridGenerator extends Component {
             tween(cell.getComponent(ElementScript).item)
             .call(()=>{
             })
-            .to(0.4,{position: new Vec3(target.position.x,target.position.y,0)})
+            .to(0.4,{position: new Vec3(target.position.x,target.position.y,0)},{easing:'quartInOut'})
             .call(()=>{  
                 if(callback)
                 {
                     callback();
-                    this.FillCellUper();
-                    
-                }
-                    
+                    this.FillCellUper();    
+                }       
             })
             .start()
             target.getComponent(ElementScript).item = cell.getComponent(ElementScript).item ;

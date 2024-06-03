@@ -30,16 +30,17 @@ export class GamePlayManager extends Component {
    
     onLoad()
     {
-     
+           // localStorage.setItem("level","1");
             GamePlayManager.instance = this;
-        
-
+          
+       
+          
        
         
     }
-    LoadLevel(calllback)
+    LoadLevel(callback)
     {
-        resources.load('levels/level', Prefab, (err, prefab) => {
+        resources.load('levels/'+localStorage.getItem("level"), Prefab, (err, prefab) => {
             if (err) {
                 console.error(err);
                 return;
@@ -48,15 +49,23 @@ export class GamePlayManager extends Component {
             this.level = newNode;
             this.level.setParent(this.levelHolder);
         });
-        this.scheduleOnce(calllback,0.5);
+        this.scheduleOnce(callback,0.2);
+       
     }
     PlayAnimation(a:number,b:number)
     {
         this.character.getComponent(PlayerController).PlayAnimation(a,b);
     }
     start() {
-        this.LoadLevel(this.thisGrid.getComponent(GridGenerator).GridGen());
-        this.level.getComponent(LevelScript).GoNextDemon();
+        // this.LoadLevel(()=>{
+            this.LoadLevel(()=>{
+                this.thisGrid.getComponent(GridGenerator).GridGen();
+                this.level.getComponent(LevelScript).GoNextDemon();
+            })
+       
+        // });
+       
+      
         console.log("NextLvel");
         
     }

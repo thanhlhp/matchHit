@@ -33,7 +33,7 @@ export class DemonStats extends Component {
         if (this.hp <= 0) {
             this.die();
             InputManager.getInstance().isPlay = false;
-            UIManager.getInstance().text.string = GamePlayManager.getInstance().level.getComponent(LevelScript).demonCount.toString();
+          
             GamePlayManager.getInstance().demon = null;
             GamePlayManager.getInstance().level.getComponent(LevelScript).GoNextDemon();
         }

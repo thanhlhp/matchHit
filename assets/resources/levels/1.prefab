@@ -1,7 +1,7 @@
 [
   {
     "__type__": "cc.Prefab",
-    "_name": "level",
+    "_name": "1",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_native": "",
@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "level",
+    "_name": "1",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": null,
@@ -469,8 +469,50 @@
   },
   {
     "__type__": "CellEditor",
+    "breakable": true,
+    "id": 2,
+    "hp": 0
+  },
+  {
+    "__type__": "CellEditor",
+    "breakable": true,
+    "id": 2,
+    "hp": 0
+  },
+  {
+    "__type__": "CellEditor",
+    "breakable": true,
+    "id": 2,
+    "hp": 0
+  },
+  {
+    "__type__": "CellEditor",
     "breakable": false,
     "id": 0,
+    "hp": 0
+  },
+  {
+    "__type__": "CellEditor",
+    "breakable": false,
+    "id": 0,
+    "hp": 0
+  },
+  {
+    "__type__": "CellEditor",
+    "breakable": true,
+    "id": 2,
+    "hp": 0
+  },
+  {
+    "__type__": "CellEditor",
+    "breakable": true,
+    "id": 2,
+    "hp": 0
+  },
+  {
+    "__type__": "CellEditor",
+    "breakable": true,
+    "id": 3,
     "hp": 0
   },
   {
@@ -493,8 +535,20 @@
   },
   {
     "__type__": "CellEditor",
-    "breakable": false,
-    "id": 0,
+    "breakable": true,
+    "id": 1,
+    "hp": 0
+  },
+  {
+    "__type__": "CellEditor",
+    "breakable": true,
+    "id": 4,
+    "hp": 0
+  },
+  {
+    "__type__": "CellEditor",
+    "breakable": true,
+    "id": 3,
     "hp": 0
   },
   {
@@ -517,8 +571,26 @@
   },
   {
     "__type__": "CellEditor",
+    "breakable": true,
+    "id": 1,
+    "hp": 0
+  },
+  {
+    "__type__": "CellEditor",
+    "breakable": true,
+    "id": 2,
+    "hp": 0
+  },
+  {
+    "__type__": "CellEditor",
     "breakable": false,
-    "id": 0,
+    "id": 2,
+    "hp": 0
+  },
+  {
+    "__type__": "CellEditor",
+    "breakable": false,
+    "id": 3,
     "hp": 0
   },
   {
@@ -541,86 +613,14 @@
   },
   {
     "__type__": "CellEditor",
-    "breakable": false,
-    "id": 0,
+    "breakable": true,
+    "id": 3,
     "hp": 0
   },
   {
     "__type__": "CellEditor",
-    "breakable": false,
-    "id": 0,
-    "hp": 0
-  },
-  {
-    "__type__": "CellEditor",
-    "breakable": false,
-    "id": 0,
-    "hp": 0
-  },
-  {
-    "__type__": "CellEditor",
-    "breakable": false,
-    "id": 0,
-    "hp": 0
-  },
-  {
-    "__type__": "CellEditor",
-    "breakable": false,
-    "id": 0,
-    "hp": 0
-  },
-  {
-    "__type__": "CellEditor",
-    "breakable": false,
-    "id": 0,
-    "hp": 0
-  },
-  {
-    "__type__": "CellEditor",
-    "breakable": false,
-    "id": 0,
-    "hp": 0
-  },
-  {
-    "__type__": "CellEditor",
-    "breakable": false,
-    "id": 0,
-    "hp": 0
-  },
-  {
-    "__type__": "CellEditor",
-    "breakable": false,
-    "id": 0,
-    "hp": 0
-  },
-  {
-    "__type__": "CellEditor",
-    "breakable": false,
-    "id": 0,
-    "hp": 0
-  },
-  {
-    "__type__": "CellEditor",
-    "breakable": false,
-    "id": 0,
-    "hp": 0
-  },
-  {
-    "__type__": "CellEditor",
-    "breakable": false,
-    "id": 0,
-    "hp": 0
-  },
-  {
-    "__type__": "CellEditor",
-    "breakable": false,
-    "id": 0,
-    "hp": 0
-  },
-  {
-    "__type__": "CellEditor",
-    "breakable": false,
-    "id": 0,
+    "breakable": true,
+    "id": 4,
     "hp": 0
   },
   {

@@ -17,6 +17,8 @@ export class UIManager extends Component {
     text: Label;
     @property(Prefab)
     textDame: Prefab;
+    @property(Node)
+    listPhaseItem:Node[] = [];
     private static instance: UIManager = null;
     public static getInstance(): UIManager {
         if (!UIManager.instance) {
@@ -33,6 +35,7 @@ export class UIManager extends Component {
     start() {
         this.hpPlayer.getComponent(ProgressBar).progress = 1;
         this.hpDemon.getComponent(ProgressBar).progress = 1;
+        this.text.string ="Level:"+ localStorage.getItem("level");
     }
     OpenPopupWin()
     {
@@ -41,6 +44,8 @@ export class UIManager extends Component {
     ClosePopupWin()
     {
         this.popupWin.active = false;
+        let level = parseInt(localStorage.getItem('level'))+1;
+        localStorage.setItem("level",level.toString())
         director.loadScene("GameScene");
     }
     SpawnTextDame1(s:string)
