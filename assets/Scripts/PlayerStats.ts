@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, CCInteger, UI } from 'cc';
+import { _decorator, Component, Node, CCInteger, UI, ParticleSystem } from 'cc';
 import { CameraController } from './CameraController';
 import { GamePlayManager } from './GamePlayManager';
 import { UIManager } from './UIManager';
@@ -14,6 +14,10 @@ export class PlayerStats extends Component {
 
     @property(Number)
     damage: number = 5;
+    @property(ParticleSystem)
+    heal_vfx:ParticleSystem;
+    dameFireBall:number = 1.5;
+    haveShield:boolean = false;
     hpBase:number;
     onLoad() {
         this.hpBase = this.hp;
@@ -21,13 +25,21 @@ export class PlayerStats extends Component {
     }
 
     takeDamage(amount: number) {
-        this.hp -= amount;
-        UIManager.getInstance().SpawnTextDame1(amount.toString());
-        GamePlayManager.getInstance().mainCamera.getComponent(CameraController).PanCam();
-        UIManager.getInstance().updateHpPlayer(this.hp/this.hpBase);
-        if (this.hp <= 0) {
-            this.die();
+        if(this.haveShield)
+        {
+            console.log("dam vao shield");
+            UIManager.getInstance().SpawnTextDame1("BLOCKED");
+        } else
+        {
+            this.hp -= amount;
+            UIManager.getInstance().SpawnTextDame1(amount.toString());
+            GamePlayManager.getInstance().mainCamera.getComponent(CameraController).PanCam();
+            UIManager.getInstance().updateHpPlayer(this.hp/this.hpBase);
+            if (this.hp <= 0) {
+                this.die();
+            }
         }
+      
     }
 
     die() {

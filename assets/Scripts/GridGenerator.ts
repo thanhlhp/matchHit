@@ -90,8 +90,10 @@ export class GridGenerator extends Component {
                     const posy = i * this.cellSize - (this.gridSize / 2) * this.cellSize + this.cellSize / 2;
                     cell.setPosition(new Vec3(posx, posy, 0));
                     cell.setSiblingIndex(this.indexCell);
+                    cell.getComponent(ElementScript).Init(true,index,0);
                     this.indexCell++;
                     const element = instantiate(this.cellPrefabs[index])
+
                     element.setParent(this.board)
                     element.setPosition(cell.position);
                     element.setSiblingIndex(this.indexItem)
@@ -118,6 +120,7 @@ export class GridGenerator extends Component {
                 
                 let index =Math.round(this.getRandomNumber(0,this.cellPrefabs.length-1));
                 const element = instantiate(this.cellPrefabs[index])
+                this.cells[6][i].getComponent(ElementScript).Init(true,index,0);
                 element.setParent(this.board)
                 element.setPosition(this.cells[6][i].position);
                 element.setSiblingIndex(this.indexItem);

@@ -30,7 +30,7 @@ export class GamePlayManager extends Component {
    
     onLoad()
     {
-           // localStorage.setItem("level","1");
+            localStorage.setItem("level","1");
             GamePlayManager.instance = this;
           
        

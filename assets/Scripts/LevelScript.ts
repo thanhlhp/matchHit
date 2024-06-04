@@ -67,16 +67,16 @@ export class LevelScript extends Component {
        
         this.demonCount++;
         this.scheduleOnce(()=>{
-            if(this.demonCount<=2)
+            if(this.demonCount<=4)
             {  
                 UIManager.getInstance().listPhaseItem[this.demonCount-1].getComponent(ItemPhaseScript).ChangeType(1);
                 if(this.demonCount-2>=0)
                 {
                     UIManager.getInstance().listPhaseItem[this.demonCount-2].getComponent(ItemPhaseScript).ChangeType(2);
                 }
-                let demon =  instantiate(this.levelHolder.getComponent(LevelHolder).demonPbs[this.demonList[this.demonCount].id]);
-                demon.getComponent(DemonStats).hp = this.demonList[this.demonCount].hp;
-                demon.getComponent(DemonStats).damage = this.demonList[this.demonCount].atk;
+                let demon =  instantiate(this.levelHolder.getComponent(LevelHolder).demonPbs[this.demonList[this.demonCount-1].id]);
+                demon.getComponent(DemonStats).hp = this.demonList[this.demonCount-1].hp;
+                demon.getComponent(DemonStats).damage = this.demonList[this.demonCount-1].atk;
                 demon.setParent(this.map);
                 //UIManager.getInstance().text.string = GamePlayManager.getInstance().level.getComponent(LevelScript).demonCount.toString();
                 GamePlayManager.getInstance().demon = demon;

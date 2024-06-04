@@ -7,6 +7,7 @@ import { ItempowerScript } from './ItempowerScript';
 import { ItemScript } from './ItemScript';
 import { PlayerController } from './PlayerController';
 import { PlayerStats } from './PlayerStats';
+import { UIManager } from './UIManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('InputManager')
@@ -18,6 +19,7 @@ export class InputManager extends Component {
     thisBoard:Node = null;
     @property(GridGenerator)
     thisGrid:GridGenerator;
+    currentIdItem:number;
     xPower: number = 1;
     private static instance: InputManager = null;
     public static getInstance(): InputManager {
@@ -140,7 +142,13 @@ export class InputManager extends Component {
     }
     ClaimCell()
     {
+        const a =  this.thisGrid.getComponent(GridGenerator).listCellTraced.length;
         this.thisGrid.getComponent(GridGenerator).listCellTraced.forEach(obj=>{
+            if(obj.getComponent(ElementScript).item.getComponent(ItemScript).type!=6)
+            {
+                this.currentIdItem = obj.getComponent(ElementScript).item.getComponent(ItemScript).type-1;
+            }
+           
             if(obj.getComponent(ElementScript).item.getComponent(ItempowerScript)!=null)
             {
                 this.xPower = obj.getComponent(ElementScript).item.getComponent(ItempowerScript).xpower;
@@ -209,11 +217,20 @@ export class InputManager extends Component {
             }
            
          })
-         
-       
-            
-         
-        
+         this.scheduleOnce(()=>{
+                if(this.currentIdItem == 0)
+                {
+                    UIManager.getInstance().listSkills[0].Init(a);
+                }
+                if(this.currentIdItem == 1)
+                {
+                    UIManager.getInstance().listSkills[1].Init(a);
+                }
+                if(this.currentIdItem == 2)
+                {
+                    UIManager.getInstance().listSkills[2].Init(a);
+                }
+         },0)      
     }
     
  

@@ -3,6 +3,7 @@ import { DemonStats } from './DemonStats';
 import { GamePlayManager } from './GamePlayManager';
 import { InputManager } from './InputManager';
 import { PlayerStats } from './PlayerStats';
+import { UIManager } from './UIManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('DemonController')
@@ -41,6 +42,12 @@ export class DemonController extends Component {
         if(this.numberAtk ==0)
         {
             this.demonAnimation.play("Idle"); 
+            if( GamePlayManager.getInstance().character.getComponent(PlayerStats).haveShield == true)
+            {
+                UIManager.getInstance().iconShield.active = false;
+                GamePlayManager.getInstance().character.getComponent(PlayerStats).haveShield = false;
+            }        
+   
             InputManager.getInstance().isPlay = false;
         }
         
@@ -66,6 +73,7 @@ export class DemonController extends Component {
         {
             
             this.numberAtk--;
+           
             GamePlayManager.getInstance().character.getComponent(PlayerStats).takeDamage(GamePlayManager.getInstance().character.getComponent(PlayerStats).damage);
             this.isPlay = false;
             this.PlayAnimation( this.numberAtk);
