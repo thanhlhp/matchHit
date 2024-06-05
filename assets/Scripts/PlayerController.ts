@@ -29,7 +29,7 @@ export class PlayerController extends Component {
     }
     start() {
         console.log('PlayerController start');
-        this.CharacterAnim.play("idle1");  
+        this.CharacterAnim.play("idle1");   
         // this.scheduleOnce(()=>{
         //     // this.CharacterAnim.play("Attack3");  
         //     this.CharacterAnim.defaultClip = this.CharacterAnim.clips[3];

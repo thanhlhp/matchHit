@@ -63,8 +63,6 @@ export class LevelScript extends Component {
     }
     GoNextDemon()
     {
-      
-       
         this.demonCount++;
         this.scheduleOnce(()=>{
             if(this.demonCount<=4)

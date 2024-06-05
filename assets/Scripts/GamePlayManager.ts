@@ -1,8 +1,10 @@
 import { _decorator, Component, Node, UITransform, SkeletalAnimation, resources, instantiate, Prefab } from 'cc';
+import { CameraController } from './CameraController';
 import { GridGenerator } from './GridGenerator';
 import { LevelScript } from './LevelScript';
 import { PlayerController } from './PlayerController';
 import { PlayerStats } from './PlayerStats';
+import { UIManager } from './UIManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('GamePlayManager')
@@ -32,11 +34,7 @@ export class GamePlayManager extends Component {
     {
             localStorage.setItem("level","1");
             GamePlayManager.instance = this;
-          
-       
-          
-       
-        
+    
     }
     LoadLevel(callback)
     {
@@ -60,7 +58,7 @@ export class GamePlayManager extends Component {
         // this.LoadLevel(()=>{
             this.LoadLevel(()=>{
                 this.thisGrid.getComponent(GridGenerator).GridGen();
-                this.level.getComponent(LevelScript).GoNextDemon();
+                //this.level.getComponent(LevelScript).GoNextDemon();
             })
        
         // });
@@ -68,6 +66,14 @@ export class GamePlayManager extends Component {
       
         console.log("NextLvel");
         
+    }
+    PlayGame()
+    {
+        this.mainCamera.getComponent(CameraController).TransCamPlay();
+        UIManager.getInstance().ShowUiGamePlay();
+        this.scheduleOnce(()=>{
+            this.level.getComponent(LevelScript).GoNextDemon();
+        },1);
     }
    
     update(deltaTime: number) {

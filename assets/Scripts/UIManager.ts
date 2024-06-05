@@ -12,6 +12,10 @@ export class UIManager extends Component {
     @property(Node)
     hpDemon:Node;
     @property(Node)
+    board:Node;
+    @property(Node)
+    phase:Node;
+    @property(Node)
     popupWin:Node;
     @property(Node)
     posTextDame1:Node = null;
@@ -27,6 +31,17 @@ export class UIManager extends Component {
     listPhaseItem:Node[] = [];
     @property(SkillItemController)
     listSkills:SkillItemController[] = [];
+    @property(Node)
+    posBoard:Node;
+    @property(Node)
+    posPhase:Node;
+    @property(Node)
+    posBarHpPlayer:Node;
+    @property(Node)
+    posBarHpDemon:Node;
+    @property(Node)
+    startBtn:Node;
+
     private static instance: UIManager = null;
     public static getInstance(): UIManager {
         if (!UIManager.instance) {
@@ -34,9 +49,25 @@ export class UIManager extends Component {
         }
         return UIManager.instance;
     }
+    
     onLoad()
     {
         UIManager.instance = this;
+    }
+    ShowUiGamePlay()
+    {
+        tween(this.hpPlayer)
+        .to(0.5,{position:this.posBarHpPlayer.position})
+        .start();
+        tween(this.hpDemon)
+        .to(0.5,{position:this.posBarHpDemon.position})
+        .start();
+        tween(this.board)
+        .to(0.5,{position:this.posBoard.position})
+        .start();
+        tween(this.phase)
+        .to(0.5,{position:this.posPhase.position})
+        .start();
     }
     start() {
         this.hpPlayer.getComponent(ProgressBar).progress = 1;
@@ -73,7 +104,7 @@ export class UIManager extends Component {
         {
             //Logic here
             console.log("heal");
-           GamePlayManager.getInstance().character.getComponent(PlayerStats).heal_vfx.play();
+            GamePlayManager.getInstance().character.getComponent(PlayerStats).heal_vfx.play();
             let newHp = GamePlayManager.getInstance().character.getComponent(PlayerStats).hp+GamePlayManager.getInstance().character.getComponent(PlayerStats).damage*3;
             GamePlayManager.getInstance().character.getComponent(PlayerStats).hp = newHp;
             this.updateHpPlayer(newHp/ GamePlayManager.getInstance().character.getComponent(PlayerStats).hpBase)
@@ -103,9 +134,9 @@ export class UIManager extends Component {
     SpawnTextDame2(s:string)
     {
         console.log(s);
-       let text =  instantiate(this.textDame);
-       text.getComponent(RichText).string = s;
-       text.setParent(this.node);
+        let text =  instantiate(this.textDame);
+        text.getComponent(RichText).string = s;
+        text.setParent(this.node);
         text.setPosition(this.posTextDame2.position);
     }
     updateHpPlayer(value: number)
@@ -119,6 +150,11 @@ export class UIManager extends Component {
         tween(this.hpDemon.getComponent(ProgressBar))
         .to(0.5,{progress:value})
         .start();
+    }
+    BtnStart()
+    {
+        GamePlayManager.getInstance().PlayGame();
+        this.startBtn.active =false;
     }
     update(deltaTime: number) {
         
