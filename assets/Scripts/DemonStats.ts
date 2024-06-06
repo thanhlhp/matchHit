@@ -3,7 +3,9 @@ import { CameraController } from './CameraController';
 import { DemonController } from './DemonController';
 import { GamePlayManager } from './GamePlayManager';
 import { InputManager } from './InputManager';
+import { ItemPhaseScript } from './ItemPhaseScript';
 import { LevelScript } from './LevelScript';
+import { PlayerController } from './PlayerController';
 import { UIManager } from './UIManager';
 const { ccclass, property } = _decorator;
 
@@ -25,23 +27,43 @@ export class DemonStats extends Component {
     }
 
     takeDamage(amount: number) {
-        this.hp -= amount;
         UIManager.getInstance().SpawnTextDame2(amount.toString());
         GamePlayManager.getInstance().mainCamera.getComponent(CameraController).PanCam();
-        UIManager.getInstance().updateHpDemon( this.hp/this.hpBase);
         this.animDemon.AnimTakeDame();
-        if (this.hp <= 0) {
-            this.die();
-            InputManager.getInstance().isPlay = false;
+        if (this.hp > 0) {
+            this.hp -= amount;
+            
+            UIManager.getInstance().updateHpDemon( this.hp/this.hpBase);
+
+            // this.die();
+            // InputManager.getInstance().isPlay = false;
           
-            GamePlayManager.getInstance().demon = null;
-            GamePlayManager.getInstance().level.getComponent(LevelScript).GoNextDemon();
+            // GamePlayManager.getInstance().demon = null;
+            // GamePlayManager.getInstance().level.getComponent(LevelScript).GoNextDemon();
         }
     }
 
     die() 
     {
         this.animDemon.AnimDead();
+        InputManager.getInstance().isPlay = false;  
+        GamePlayManager.getInstance().demon = null;
+        
+        UIManager.getInstance().listPhaseItem[GamePlayManager.getInstance().level.getComponent(LevelScript).demonCount].getComponent(ItemPhaseScript).ChangeType(2);
+        GamePlayManager.getInstance().level.getComponent(LevelScript).demonCount++;
+
+        if( GamePlayManager.getInstance().level.getComponent(LevelScript).demonCount<=3)
+        {
+      
+            GamePlayManager.getInstance().character.getComponent(PlayerController).isRuning = true;
+      
+        }
+            
+        else{
+            UIManager.getInstance().OpenPopupWin();
+        }
+
+        
         // Thêm logic khi nhân vật chết, ví dụ: hủy node, phát hiệu ứng, v.v.
       
             //this.node.destroy();

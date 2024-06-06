@@ -13,7 +13,8 @@ const { ccclass, property } = _decorator;
 @ccclass('InputManager')
 export class InputManager extends Component {
     isTouch:boolean = false;
-    isPlay:boolean = false;
+    isPlay:boolean = true;
+    //isRuning:boolean = false;
     mousePos:Vec3;
     @property(Node)
     thisBoard:Node = null;

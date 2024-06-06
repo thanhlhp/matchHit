@@ -4,6 +4,7 @@ import { DemonStats } from './DemonStats';
 import { GamePlayManager } from './GamePlayManager';
 import { GridGenerator } from './GridGenerator';
 import { InputManager } from './InputManager';
+import { LevelScript } from './LevelScript';
 import { PlayerStats } from './PlayerStats';
 const { ccclass, property } = _decorator;
 
@@ -15,7 +16,8 @@ export class PlayerController extends Component {
     numberAtk:number = 0;
     numberAtkdemon:number = 0;
     xPower:number = 1;
-    isPlay:boolean = false;
+    isPlay:boolean = true;
+    isRuning:boolean = false;
     onLoad()
     {
         this.CharacterAnim = this.getComponent(SkeletalAnimation);
@@ -42,7 +44,7 @@ export class PlayerController extends Component {
         let animString = "Attack"+a;
         this.numberAtk = count;
         this.xPower = xPower;
-
+        this.CharacterAnim.play('idle1'); 
         // Lưu trữ callback cho animation này
         if(this.numberAtk>0 && this.isPlay== false)
         {
@@ -59,7 +61,6 @@ export class PlayerController extends Component {
             } 
             else
             {
-           
                 InputManager.getInstance().isPlay = false;
             }
               
@@ -68,10 +69,10 @@ export class PlayerController extends Component {
         } 
         if(this.numberAtk ==0)
         {
-            this.CharacterAnim.play("idle1"); 
+           
             if(GamePlayManager.getInstance().demon!=null)
             {
-              
+                
                 GamePlayManager.getInstance().demon.getComponent(DemonController).PlayAnimation(this.numberAtkdemon);
                 this.numberAtkdemon = 0;
             } else 
@@ -95,23 +96,34 @@ export class PlayerController extends Component {
             this.numberAtk--;
             if(this.numberAtk > 0)
             GamePlayManager.getInstance().demon.getComponent(DemonStats).takeDamage(GamePlayManager.getInstance().character.getComponent(PlayerStats).damage)
-            else  GamePlayManager.getInstance().demon.getComponent(DemonStats).takeDamage(GamePlayManager.getInstance().character.getComponent(PlayerStats).damage*this.xPower);
+            else
+            {
+                GamePlayManager.getInstance().demon.getComponent(DemonStats).takeDamage(GamePlayManager.getInstance().character.getComponent(PlayerStats).damage*this.xPower);
+                if( GamePlayManager.getInstance().demon.getComponent(DemonStats).hp<=0)
+                {
+                    GamePlayManager.getInstance().demon.getComponent(DemonStats).die();
+                    // this.CharacterAnim.getState('idle1').pause();
+                    
+                }
+            } 
             this.isPlay = false;
+        
             this.PlayAnimation( this.numberAtk,this.xPower);
-        } else
-        {
-            this.numberAtk= 0;
-          this.isPlay = false;
-          InputManager.getInstance().isPlay = false;
-          this.CharacterAnim.play("idle1");  
-        }
+        } 
+        // else
+        // {
+        //     this.numberAtk= 0;
+        //   this.isPlay = false;
+        //   InputManager.getInstance().isPlay = false;
+        //   this.CharacterAnim.play("idle1");  
+        // }
        
      
         console.log(this.numberAtk,this.isPlay)
     }
   
     update(deltaTime: number) {
-        
+      
     }
 }
 

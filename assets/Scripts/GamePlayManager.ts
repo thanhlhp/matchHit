@@ -1,6 +1,8 @@
 import { _decorator, Component, Node, UITransform, SkeletalAnimation, resources, instantiate, Prefab } from 'cc';
 import { CameraController } from './CameraController';
 import { GridGenerator } from './GridGenerator';
+import { InputManager } from './InputManager';
+import { ItemPhaseScript } from './ItemPhaseScript';
 import { LevelScript } from './LevelScript';
 import { PlayerController } from './PlayerController';
 import { PlayerStats } from './PlayerStats';
@@ -71,9 +73,31 @@ export class GamePlayManager extends Component {
     {
         this.mainCamera.getComponent(CameraController).TransCamPlay();
         UIManager.getInstance().ShowUiGamePlay();
-        this.scheduleOnce(()=>{
-            this.level.getComponent(LevelScript).GoNextDemon();
-        },1);
+        this.character.getComponent(PlayerController).isRuning = true;
+        this.level.getComponent(LevelScript).GoNextDemon();
+        this.character.getComponent(PlayerController).CharacterAnim.getState('idle1').pause();
+    }
+    GoFight(bool:boolean)
+    {
+        if(bool)
+        {
+           
+            if(this.character.getComponent(PlayerController).isRuning)
+            {
+                UIManager.getInstance().updateHpDemon(1);
+                this.character.getComponent(PlayerController).CharacterAnim.getState('idle1').resume();
+                this.character.getComponent(PlayerController).isRuning = false;
+                this.character.getComponent(PlayerController).isPlay = false;
+                InputManager.getInstance().isPlay = false;
+                UIManager.getInstance().listPhaseItem[this.level.getComponent(LevelScript).demonCount].getComponent(ItemPhaseScript).ChangeType(1);
+                
+            } 
+        }
+        else
+        {
+            this.character.getComponent(PlayerController).CharacterAnim.getState('idle1').pause();
+        }
+        
     }
    
     update(deltaTime: number) {

@@ -1,9 +1,11 @@
-import { _decorator, Component, Node, Prefab, instantiate, Scene } from 'cc';
+import { _decorator, Component, Node, Prefab, instantiate, Scene, Vec3 } from 'cc';
 import { DemonStats } from './DemonStats';
 import { GamePlayManager } from './GamePlayManager';
 import { InputManager } from './InputManager';
 import { ItemPhaseScript } from './ItemPhaseScript';
 import { LevelHolder } from './LevelHolder';
+import { PlayerController } from './PlayerController';
+import { PlayerStats } from './PlayerStats';
 import { UIManager } from './UIManager';
 const { ccclass, property } = _decorator;
 @ccclass('CellEditor')
@@ -50,6 +52,9 @@ export class LevelScript extends Component {
     levelHolder:LevelHolder;
     @property(CellEditor)
     listCellEditor:CellEditor[] = new Array(36)
+    @property(Node)
+    listPosDemon:Node[] = new Array(4);
+    listDemon:Node[] = new  Array(4);
     onLoad()
     {
         //this.demonCount = 0;
@@ -59,37 +64,41 @@ export class LevelScript extends Component {
    
     start() {
         console.log(this.demonCount);
+        this.demonCount = 0;
 
     }
     GoNextDemon()
     {
-        this.demonCount++;
+        // this.demonCount++;
         this.scheduleOnce(()=>{
-            if(this.demonCount<=4)
+            for(let i = 0;i<this.demonList.length;i++)
             {  
-                UIManager.getInstance().listPhaseItem[this.demonCount-1].getComponent(ItemPhaseScript).ChangeType(1);
-                if(this.demonCount-2>=0)
-                {
-                    UIManager.getInstance().listPhaseItem[this.demonCount-2].getComponent(ItemPhaseScript).ChangeType(2);
-                }
-                let demon =  instantiate(this.levelHolder.getComponent(LevelHolder).demonPbs[this.demonList[this.demonCount-1].id]);
-                demon.getComponent(DemonStats).hp = this.demonList[this.demonCount-1].hp;
-                demon.getComponent(DemonStats).damage = this.demonList[this.demonCount-1].atk;
+                let demon =  instantiate(this.levelHolder.getComponent(LevelHolder).demonPbs[this.demonList[i].id]);
+                demon.getComponent(DemonStats).hp = this.demonList[i].hp;
+                demon.getComponent(DemonStats).damage = this.demonList[i].atk;
+                demon.setPosition(this.listPosDemon[i].position);
                 demon.setParent(this.map);
+                this.listDemon[i] = demon;
+                console.log(demon.position.z+"/ssss/"+demon.worldPosition.z);
                 //UIManager.getInstance().text.string = GamePlayManager.getInstance().level.getComponent(LevelScript).demonCount.toString();
-                GamePlayManager.getInstance().demon = demon;
-                UIManager.getInstance().updateHpDemon(1);
-                demon.setPosition(this.spawnPosDemon.position);
-            } else
-            {
-                UIManager.getInstance().OpenPopupWin();
-                console.log("win",this.demonCount);
-            }
+
+                
+               
+            } 
         },0.5)
        
     }
     update(deltaTime: number) {
-        
+        if(GamePlayManager.getInstance().character.getComponent(PlayerController).isRuning)
+            this.node.position = new Vec3(this.node.position.x,this.node.position.y,this.node.position.z-4*deltaTime)
+        if(GamePlayManager.getInstance().character.position.z>=this.listPosDemon[this.demonCount].worldPosition.z-4)
+        {
+            GamePlayManager.getInstance().demon = this.listDemon[this.demonCount];
+            GamePlayManager.getInstance().GoFight(true);
+        } else
+        {
+            GamePlayManager.getInstance().GoFight(false);
+        }
     }
 }
 
